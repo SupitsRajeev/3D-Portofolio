@@ -48,6 +48,22 @@ Every package extends `tsconfig.base.json` which sets `composite: true`. The roo
 - `pnpm run build` — runs `typecheck` first, then recursively runs `build` in all packages that define it
 - `pnpm run typecheck` — runs `tsc --build --emitDeclarationOnly` using project references
 
+## Artifacts
+
+### `artifacts/portfolio` (`@workspace/portfolio`)
+
+Personal portfolio website for "Alex Chen" — full-stack developer.
+
+- React + Vite single-page app with Tailwind CSS
+- 3D interactive hero section using React Three Fiber + @react-three/drei (icosahedron with distort material, mouse parallax, floating animation)
+- WebGL detection with graceful animated CSS fallback
+- Dark mode by default via next-themes
+- Sections: Hero, About, Projects, Skills, Contact, Footer
+- Framer Motion scroll-triggered entrance animations
+- Fully responsive (mobile hamburger nav)
+- Full SEO: title, description, Open Graph, Twitter Card, semantic HTML, ARIA labels
+- Packages: @react-three/fiber, @react-three/drei, three, framer-motion, next-themes, lucide-react
+
 ## Packages
 
 ### `artifacts/api-server` (`@workspace/api-server`)
