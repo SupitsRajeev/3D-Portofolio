@@ -218,6 +218,38 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ── Space / star animations ── */
+@keyframes twinkle {
+  0%   { opacity: var(--tw-opacity, 0.15); transform: scale(1); }
+  100% { opacity: calc(var(--tw-opacity, 0.15) + 0.45); transform: scale(1.3); }
+}
+
+@keyframes shoot {
+  0%   { opacity: 0;   transform: translateX(0)    translateY(0)    scaleY(0); }
+  10%  { opacity: 1; }
+  60%  { opacity: 0.6; transform: translateX(-120px) translateY(120px) scaleY(1); }
+  100% { opacity: 0;   transform: translateX(-200px) translateY(200px) scaleY(0.5); }
+}
+
+@keyframes nebula-1 {
+  0%, 100% { transform: translate(0, 0)    scale(1);    opacity: 0.7; }
+  50%       { transform: translate(30px, 20px) scale(1.06); opacity: 1; }
+}
+
+@keyframes nebula-2 {
+  0%, 100% { transform: translate(0, 0)     scale(1);    opacity: 0.6; }
+  50%       { transform: translate(-20px, 30px) scale(1.04); opacity: 0.9; }
+}
+
+@keyframes nebula-3 {
+  0%, 100% { transform: translate(0, 0)     scale(1);    opacity: 0.5; }
+  50%       { transform: translate(25px, -20px) scale(1.05); opacity: 0.85; }
+}
+
+.animate-nebula-1 { animation: nebula-1 12s ease-in-out infinite; }
+.animate-nebula-2 { animation: nebula-2 16s ease-in-out infinite; }
+.animate-nebula-3 { animation: nebula-3 14s ease-in-out infinite; }
+
 @layer utilities {
   .glass-panel {
     @apply bg-card/70 backdrop-blur-xl border border-border shadow-lg;

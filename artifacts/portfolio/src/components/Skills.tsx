@@ -1,34 +1,47 @@
 import { motion } from "framer-motion";
+import { Code, Monitor, Server, Settings } from "lucide-react";
 import { FloatingShapes3D } from "./FloatingShapes3D";
 
 const skills = [
   {
     category: "Languages",
-    items: ["JavaScript", "TypeScript", "Python", "HTML/CSS", "SQL", "GraphQL"]
+    Icon: Code,
+    items: ["JavaScript", "TypeScript", "Python", "HTML/CSS", "SQL", "GraphQL"],
+    color: "text-violet-400",
+    bg: "bg-violet-500/10",
   },
   {
     category: "Frontend",
-    items: ["React", "Next.js", "Tailwind CSS", "Framer Motion", "Three.js", "Redux"]
+    Icon: Monitor,
+    items: ["React", "Next.js", "Tailwind CSS", "Framer Motion", "Three.js", "Redux"],
+    color: "text-cyan-400",
+    bg: "bg-cyan-500/10",
   },
   {
     category: "Backend",
-    items: ["Node.js", "Express", "PostgreSQL", "MongoDB", "Redis", "REST APIs"]
+    Icon: Server,
+    items: ["Node.js", "Express", "PostgreSQL", "MongoDB", "Redis", "REST APIs"],
+    color: "text-emerald-400",
+    bg: "bg-emerald-500/10",
   },
   {
     category: "DevOps & Tools",
-    items: ["AWS", "Docker", "Git", "CI/CD", "Vercel", "Figma"]
-  }
+    Icon: Settings,
+    items: ["AWS", "Docker", "Git", "CI/CD", "Vercel", "Figma"],
+    color: "text-orange-400",
+    bg: "bg-orange-500/10",
+  },
 ];
 
 export function Skills() {
   return (
     <section id="skills" className="py-24 md:py-32 bg-background relative overflow-hidden">
       {/* 3D floating background */}
-      <FloatingShapes3D variant="skills" className="opacity-40" />
+      <FloatingShapes3D variant="skills" className="opacity-30 dark:opacity-40" />
 
-      {/* Soft glow blobs */}
-      <div className="absolute top-1/4 left-0 w-64 h-64 bg-primary/10 blur-[100px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-1/4 right-0 w-64 h-64 bg-cyan-500/8 blur-[100px] rounded-full pointer-events-none" />
+      {/* Nebula blobs */}
+      <div className="absolute top-1/4 left-0 w-80 h-80 bg-primary/8 dark:bg-primary/12 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-1/4 right-0 w-72 h-72 bg-cyan-500/6 dark:bg-cyan-500/10 blur-[110px] rounded-full pointer-events-none" />
 
       <div className="container px-6 md:px-12 mx-auto max-w-5xl relative z-10">
         <motion.div
@@ -42,27 +55,34 @@ export function Skills() {
           <div className="h-[1px] flex-grow max-w-[200px] bg-border" />
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12">
+        <div className="grid md:grid-cols-2 gap-10 md:gap-14">
           {skills.map((skillGroup, index) => (
             <motion.div
               key={skillGroup.category}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.55, delay: index * 0.1 }}
               className="space-y-4 backdrop-blur-sm"
             >
-              <h3 className="text-xl font-medium text-foreground tracking-tight">{skillGroup.category}</h3>
-              <div className="flex flex-wrap gap-3">
+              {/* Category header */}
+              <div className="flex items-center gap-3 mb-5">
+                <div className={`p-2 rounded-lg ${skillGroup.bg} ${skillGroup.color} dark:drop-shadow-[0_0_8px_currentColor]`}>
+                  <skillGroup.Icon className="w-4 h-4" />
+                </div>
+                <h3 className="text-lg font-semibold text-foreground tracking-tight">{skillGroup.category}</h3>
+              </div>
+
+              <div className="flex flex-wrap gap-2.5">
                 {skillGroup.items.map((item, i) => (
                   <motion.div
                     key={item}
                     initial={{ opacity: 0, scale: 0.85 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.3, delay: index * 0.1 + i * 0.04 }}
+                    transition={{ duration: 0.3, delay: index * 0.08 + i * 0.04 }}
                     whileHover={{ scale: 1.08, y: -2 }}
-                    className="px-4 py-2 bg-card/80 backdrop-blur-sm border border-border/50 rounded-lg text-sm text-muted-foreground hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-colors shadow-sm cursor-default"
+                    className="px-4 py-2 bg-card/80 dark:bg-card/60 backdrop-blur-sm border border-border/60 rounded-lg text-sm text-muted-foreground hover:text-primary hover:border-primary/40 dark:hover:border-primary/40 hover:bg-primary/5 dark:hover:shadow-[0_0_12px_hsl(var(--primary)/0.15)] transition-all duration-200 shadow-sm cursor-default font-medium"
                   >
                     {item}
                   </motion.div>

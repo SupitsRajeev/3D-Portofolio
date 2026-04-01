@@ -1,0 +1,107 @@
+Act as a senior UI/UX designer and full-stack developer.
+
+Update my existing 3D portfolio website to make it more creative, visually stunning, and professional while keeping it clean and SEO-friendly.
+
+### 🎯 Main Goal:
+
+Enhance the design with:
+
+* Creative modern icons
+* A space/universe-inspired dark mode
+* Subtle but immersive 3D effects
+
+---
+
+### 🌌 Dark Mode Theme (VERY IMPORTANT):
+
+* Use a **universe/space theme**
+* Background: deep black / dark navy gradient
+* Add:
+
+  * subtle stars (tiny glowing dots)
+  * nebula-like gradients (purple, blue, cyan)
+  * soft glow effects
+* Include **floating particles or stars animation**
+* Add a **parallax or depth effect** for immersion
+
+👉 Important:
+Keep it elegant, NOT flashy or distracting
+
+---
+
+### ☀️ Light Mode:
+
+* Soft modern minimal theme
+* Warm neutral background
+* Keep same layout but lighter colors
+* Maintain consistency with dark mode
+
+---
+
+### 🎨 Icons (VERY IMPORTANT):
+
+* Add modern icons across the website:
+
+  * Navbar items (About, Projects, Skills, Contact)
+  * Buttons (View Work, Contact)
+  * Social links
+* Use:
+
+  * Lucide icons OR Heroicons
+* Style:
+
+  * Minimal outline icons
+  * Add subtle glow in dark mode
+  * Smooth hover animations
+
+---
+
+### 🧊 3D Enhancements:
+
+* Keep existing 3D hero object
+* Improve it by:
+
+  * adding slow rotation
+  * soft lighting
+  * glow/reflection
+* Add small floating 3D elements (optional):
+
+  * spheres / rings / particles
+* Ensure performance is optimized
+
+---
+
+### ✨ UI/UX Improvements:
+
+* Add smooth animations (Framer Motion)
+* Add hover effects:
+
+  * buttons glow
+  * cards slightly lift
+* Improve spacing and typography
+* Add glassmorphism (blur panels)
+
+---
+
+### ⚡ Performance:
+
+* Optimize animations
+* Lazy load 3D components
+* Keep site fast
+
+---
+
+### 📦 Deliver:
+
+* Updated code (components + styles)
+* Clean structure
+* Explain what you changed
+
+---
+
+### ⚠️ Important Rules:
+
+* Do NOT break existing functionality
+* Do NOT overload with animations
+* Keep it clean, modern, and professional
+* Ensure text content is readable (SEO friendly)

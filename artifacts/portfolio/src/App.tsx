@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 
 import { Navigation } from "@/components/Navigation";
+import { StarField } from "@/components/StarField";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
 import { Projects } from "@/components/Projects";
@@ -20,6 +21,7 @@ function App() {
       <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
         <TooltipProvider>
           <div className="min-h-screen bg-background text-foreground flex flex-col font-sans selection:bg-primary/30 selection:text-primary-foreground">
+            <StarField />
             <Navigation />
             <main className="flex-grow">
               <Hero />
