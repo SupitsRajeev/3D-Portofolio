@@ -4,6 +4,7 @@ import { Moon, Sun, Menu, X, User, FolderOpen, Cpu, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import { useContent } from "@/context/ContentContext";
 
 const navLinks = [
   { name: "About",    href: "#about",    Icon: User },
@@ -14,6 +15,7 @@ const navLinks = [
 
 export function Navigation() {
   const { theme, setTheme } = useTheme();
+  const { content } = useContent();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -39,7 +41,7 @@ export function Navigation() {
           className="text-xl font-bold tracking-tight text-foreground hover:text-primary transition-colors duration-300 group"
           aria-label="Home"
         >
-          Alex
+          {content.identity.firstName}
           <span className="text-primary group-hover:drop-shadow-[0_0_8px_hsl(var(--primary)/0.8)] transition-all duration-300">.</span>
         </a>
 

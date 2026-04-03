@@ -1,39 +1,11 @@
 import { motion } from "framer-motion";
-import { Code, Monitor, Server, Settings } from "lucide-react";
 import { FloatingShapes3D } from "./FloatingShapes3D";
-
-const skills = [
-  {
-    category: "Languages",
-    Icon: Code,
-    items: ["JavaScript", "TypeScript", "Python", "HTML/CSS", "SQL", "GraphQL"],
-    color: "text-violet-400",
-    bg: "bg-violet-500/10",
-  },
-  {
-    category: "Frontend",
-    Icon: Monitor,
-    items: ["React", "Next.js", "Tailwind CSS", "Framer Motion", "Three.js", "Redux"],
-    color: "text-cyan-400",
-    bg: "bg-cyan-500/10",
-  },
-  {
-    category: "Backend",
-    Icon: Server,
-    items: ["Node.js", "Express", "PostgreSQL", "MongoDB", "Redis", "REST APIs"],
-    color: "text-emerald-400",
-    bg: "bg-emerald-500/10",
-  },
-  {
-    category: "DevOps & Tools",
-    Icon: Settings,
-    items: ["AWS", "Docker", "Git", "CI/CD", "Vercel", "Figma"],
-    color: "text-orange-400",
-    bg: "bg-orange-500/10",
-  },
-];
+import { useContent } from "@/context/ContentContext";
+import { COLOR_SCHEMES, SKILL_ICONS } from "@/content";
 
 export function Skills() {
+  const { content } = useContent();
+  const { skills } = content;
   return (
     <section id="skills" className="py-24 md:py-32 bg-background relative overflow-hidden">
       {/* 3D floating background */}
@@ -56,7 +28,10 @@ export function Skills() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-10 md:gap-14">
-          {skills.map((skillGroup, index) => (
+          {skills.map((skillGroup, index) => {
+            const scheme = COLOR_SCHEMES[skillGroup.colorScheme];
+            const Icon = SKILL_ICONS[skillGroup.icon] ?? SKILL_ICONS["Code"];
+            return (
             <motion.div
               key={skillGroup.category}
               initial={{ opacity: 0, y: 24 }}
@@ -67,8 +42,8 @@ export function Skills() {
             >
               {/* Category header */}
               <div className="flex items-center gap-3 mb-5">
-                <div className={`p-2 rounded-lg ${skillGroup.bg} ${skillGroup.color} dark:drop-shadow-[0_0_8px_currentColor]`}>
-                  <skillGroup.Icon className="w-4 h-4" />
+                <div className={`p-2 rounded-lg ${scheme.skillBg} ${scheme.skillColor} dark:drop-shadow-[0_0_8px_currentColor]`}>
+                  <Icon className="w-4 h-4" />
                 </div>
                 <h3 className="text-lg font-semibold text-foreground tracking-tight">{skillGroup.category}</h3>
               </div>
@@ -89,7 +64,8 @@ export function Skills() {
                 ))}
               </div>
             </motion.div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

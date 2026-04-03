@@ -1,42 +1,8 @@
 import { motion } from "framer-motion";
-import { ArrowUpRight, Github, Link2, Brain, Layers2, Leaf } from "lucide-react";
+import { ArrowUpRight, Github, Link2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-const projects = [
-  {
-    title: "NeuralCanvas",
-    description: "AI-powered generative art platform. A creative tool letting artists generate and iterate on artworks using neural style transfer.",
-    stack: ["React", "Python", "TensorFlow", "AWS"],
-    link: "#",
-    github: "#",
-    Icon: Brain,
-    accentFrom: "from-violet-500",
-    accentTo: "to-purple-600",
-    glowColor: "group-hover:shadow-violet-500/20",
-  },
-  {
-    title: "FlowDesk",
-    description: "Real-time collaborative task management. Built for remote teams who need live syncing and intuitive workflows without visual clutter.",
-    stack: ["Next.js", "WebSocket", "PostgreSQL", "Redis"],
-    link: "#",
-    github: "#",
-    Icon: Layers2,
-    accentFrom: "from-emerald-500",
-    accentTo: "to-cyan-500",
-    glowColor: "group-hover:shadow-emerald-500/20",
-  },
-  {
-    title: "EcoTrack",
-    description: "Carbon footprint analytics dashboard. Helps individuals and businesses visualize and reduce their environmental impact through interactive data visualization.",
-    stack: ["React", "D3.js", "Express", "MongoDB"],
-    link: "#",
-    github: "#",
-    Icon: Leaf,
-    accentFrom: "from-orange-500",
-    accentTo: "to-amber-400",
-    glowColor: "group-hover:shadow-orange-500/20",
-  },
-];
+import { useContent } from "@/context/ContentContext";
+import { COLOR_SCHEMES, PROJECT_ICONS } from "@/content";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -48,6 +14,8 @@ const itemVariants = {
 };
 
 export function Projects() {
+  const { content } = useContent();
+  const { projects } = content;
   return (
     <section id="projects" className="py-24 md:py-32 bg-card/20 dark:bg-card/10 relative overflow-hidden">
       {/* Background glow */}
@@ -74,21 +42,24 @@ export function Projects() {
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {projects.map((project) => (
+          {projects.map((project) => {
+            const scheme = COLOR_SCHEMES[project.colorScheme];
+            const Icon = PROJECT_ICONS[project.icon] ?? PROJECT_ICONS["Rocket"];
+            return (
             <motion.article
               key={project.title}
               variants={itemVariants}
-              className={`group relative flex flex-col justify-between h-full p-6 sm:p-8 rounded-2xl bg-card/70 dark:bg-card/60 backdrop-blur-sm border border-border/60 hover:border-primary/40 dark:hover:border-primary/30 shadow-md hover:shadow-2xl ${project.glowColor} dark:hover:shadow-[0_8px_40px_hsl(var(--primary)/0.12)] transition-all duration-400 hover:-translate-y-1`}
+              className={`group relative flex flex-col justify-between h-full p-6 sm:p-8 rounded-2xl bg-card/70 dark:bg-card/60 backdrop-blur-sm border border-border/60 hover:border-primary/40 dark:hover:border-primary/30 shadow-md hover:shadow-2xl ${scheme.glow} dark:hover:shadow-[0_8px_40px_hsl(var(--primary)/0.12)] transition-all duration-400 hover:-translate-y-1`}
               whileHover={{ y: -4 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
               {/* Gradient card sheen on hover */}
-              <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${project.accentFrom}/5 ${project.accentTo}/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
+              <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${scheme.accentFrom}/5 ${scheme.accentTo}/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
 
               <div>
                 {/* Project icon */}
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 bg-gradient-to-br ${project.accentFrom} ${project.accentTo} shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300`}>
-                  <project.Icon className="w-5 h-5 text-white" />
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 bg-gradient-to-br ${scheme.accentFrom} ${scheme.accentTo} shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300`}>
+                  <Icon className="w-5 h-5 text-white" />
                 </div>
 
                 <h3 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2 group-hover:text-primary transition-colors duration-200">
@@ -137,7 +108,8 @@ export function Projects() {
                 </div>
               </div>
             </motion.article>
-          ))}
+            );
+          })}
         </motion.div>
       </div>
     </section>

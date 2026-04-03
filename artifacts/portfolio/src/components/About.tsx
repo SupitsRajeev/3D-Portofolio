@@ -1,29 +1,7 @@
 import { motion } from "framer-motion";
-import { Compass, Layers, Code2, Sparkles } from "lucide-react";
 import { FloatingShapes3D } from "./FloatingShapes3D";
-
-const highlights = [
-  {
-    Icon: Layers,
-    title: "Architecture",
-    desc: "Scalable, maintainable systems built for the long term.",
-  },
-  {
-    Icon: Compass,
-    title: "Exploration",
-    desc: "Always learning, testing new paradigms and tools.",
-  },
-  {
-    Icon: Code2,
-    title: "Clean Code",
-    desc: "Readable, well-structured code is a first-class concern.",
-  },
-  {
-    Icon: Sparkles,
-    title: "Craft",
-    desc: "Details matter — from pixel-perfect UI to polished UX.",
-  },
-];
+import { useContent } from "@/context/ContentContext";
+import { HIGHLIGHT_ICONS } from "@/content";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -35,6 +13,8 @@ const itemVariants = {
 };
 
 export function About() {
+  const { content } = useContent();
+  const { bio, aboutHighlights, identity } = content;
   return (
     <section id="about" className="py-24 md:py-32 bg-background relative overflow-hidden">
       {/* Subtle glow in dark mode */}
@@ -60,25 +40,16 @@ export function About() {
             {/* Text */}
             <div className="space-y-0">
               <motion.div variants={itemVariants} className="space-y-5 text-lg text-muted-foreground leading-relaxed mb-10">
-                <p>
-                  I build things for the web that are{" "}
-                  <span className="text-foreground font-semibold">fast, beautiful, and intentional</span>.
-                  With 5+ years of experience spanning React, Node.js, and cloud infrastructure, I love turning
-                  complex problems into elegant solutions.
-                </p>
-                <p>
-                  My approach to development is rooted in design thinking. A great user experience
-                  isn't just about how it looks — it's about how it <em>feels</em> and functions.
-                  The architecture should be as clean as the interface.
-                </p>
-                <p>
-                  When not coding, I'm hiking trails or experimenting with generative art.
-                </p>
+                {bio.map((para, i) => (
+                  <p key={i}>{para}</p>
+                ))}
               </motion.div>
 
               {/* Highlights grid */}
               <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                {highlights.map(({ Icon, title, desc }) => (
+                {aboutHighlights.map(({ icon, title, desc }) => {
+                  const Icon = HIGHLIGHT_ICONS[icon] ?? HIGHLIGHT_ICONS["Star"];
+                  return (
                   <motion.div
                     key={title}
                     className="flex gap-4 p-4 rounded-xl border border-border/50 bg-card/60 backdrop-blur-sm hover:border-primary/30 dark:hover:shadow-[0_0_20px_hsl(var(--primary)/0.08)] transition-all duration-300 group cursor-default"
@@ -92,7 +63,8 @@ export function About() {
                       <p className="text-muted-foreground text-sm leading-relaxed">{desc}</p>
                     </div>
                   </motion.div>
-                ))}
+                  );
+                })}
               </motion.div>
             </div>
 
@@ -103,7 +75,7 @@ export function About() {
                 <FloatingShapes3D variant="about" className="opacity-90" />
                 <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-card to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-                  <p className="text-xs font-mono text-muted-foreground/60 tracking-widest uppercase">Alex Chen</p>
+                  <p className="text-xs font-mono text-muted-foreground/60 tracking-widest uppercase">{identity.name}</p>
                   <p className="text-xs font-mono text-primary/50 tracking-wider">Full-Stack</p>
                 </div>
               </div>
