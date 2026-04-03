@@ -8,6 +8,8 @@ import { HIGHLIGHT_ICONS } from "@/content";
 import { FancyIconBox } from "./FancyIconBox";
 import { useOrb } from "@/context/OrbContext";
 
+const SECTION_VISIBILITY_THRESHOLD = 0.25;
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
@@ -28,7 +30,7 @@ export function About() {
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => setIsExpanded(entry.isIntersecting),
-      { threshold: 0.25 }
+      { threshold: SECTION_VISIBILITY_THRESHOLD }
     );
     observer.observe(el);
     return () => observer.disconnect();

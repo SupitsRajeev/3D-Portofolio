@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import { useOrb } from "@/context/OrbContext";
 
@@ -12,6 +12,8 @@ interface FloatingOrbProps {
 export function FloatingOrb({ src = "/profile.jpg", alt = "Profile" }: FloatingOrbProps) {
   const { isExpanded } = useOrb();
   const turbulenceRef = useRef<SVGFETurbulenceElement>(null);
+  const uid = useId();
+  const filterId = `orb-liquid-${uid.replace(/:/g, "")}`;
 
   // Animate SVG turbulence baseFrequency to create a liquid-edge wobble
   useEffect(() => {
@@ -71,7 +73,7 @@ export function FloatingOrb({ src = "/profile.jpg", alt = "Profile" }: FloatingO
             aria-hidden="true"
           >
             <defs>
-              <filter id="orb-liquid" x="-25%" y="-25%" width="150%" height="150%">
+              <filter id={filterId} x="-25%" y="-25%" width="150%" height="150%">
                 <feTurbulence
                   ref={turbulenceRef}
                   type="turbulence"
@@ -99,7 +101,7 @@ export function FloatingOrb({ src = "/profile.jpg", alt = "Profile" }: FloatingO
           />
 
           {/* Circle image with liquid-mask filter */}
-          <div style={{ filter: "url(#orb-liquid)" }}>
+          <div style={{ filter: `url(#${filterId})` }}>
             <div className="w-16 h-16 rounded-full overflow-hidden ring-2 ring-primary/60 shadow-[0_0_20px_4px_hsl(var(--primary)/0.3)]">
               <img
                 src={src}
