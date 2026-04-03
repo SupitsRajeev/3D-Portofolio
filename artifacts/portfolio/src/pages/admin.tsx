@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
@@ -28,8 +28,303 @@ import {
   type SkillGroup,
   type AboutHighlight,
 } from "@/content";
-import { ArrowLeft, Plus, Trash2, RotateCcw, Save, GripVertical } from "lucide-react";
+import { ArrowLeft, Plus, Trash2, RotateCcw, Save, GripVertical, Lock, Eye, EyeOff, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+// ─── Admin auth ───────────────────────────────────────────────────────────────
+const AUTH_SESSION_KEY = "portfolio-admin-session";
+const CREDS_KEY = "portfolio-admin-creds";
+const DEFAULT_USERNAME = "admin";
+const DEFAULT_PASSWORD = "admin";
+
+function getStoredCreds(): { username: string; password: string } {
+  try {
+    const raw = localStorage.getItem(CREDS_KEY);
+    if (raw) return JSON.parse(raw) as { username: string; password: string };
+  } catch { /* ignore */ }
+  return { username: DEFAULT_USERNAME, password: DEFAULT_PASSWORD };
+}
+
+function saveStoredCreds(username: string, password: string) {
+  localStorage.setItem(CREDS_KEY, JSON.stringify({ username, password }));
+}
+
+function setSession(remember: boolean) {
+  if (remember) {
+    localStorage.setItem(AUTH_SESSION_KEY, "1");
+  } else {
+    sessionStorage.setItem(AUTH_SESSION_KEY, "1");
+  }
+}
+
+function clearSession() {
+  localStorage.removeItem(AUTH_SESSION_KEY);
+  sessionStorage.removeItem(AUTH_SESSION_KEY);
+}
+
+function isLoggedIn(): boolean {
+  return (
+    localStorage.getItem(AUTH_SESSION_KEY) === "1" ||
+    sessionStorage.getItem(AUTH_SESSION_KEY) === "1"
+  );
+}
+
+// ─── Login screen ─────────────────────────────────────────────────────────────
+function AdminLogin({ onLogin }: { onLogin: () => void }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPw, setShowPw] = useState(false);
+  const [remember, setRemember] = useState(true);
+  const [error, setError] = useState("");
+  const { toast } = useToast();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const creds = getStoredCreds();
+    if (username === creds.username && password === creds.password) {
+      setSession(remember);
+      toast({ title: "Welcome back!", description: "You are now logged in to the Portfolio CMS." });
+      onLogin();
+    } else {
+      setError("Invalid username or password.");
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-background text-foreground flex">
+      {/* ── Left: login form ── */}
+      <div className="flex-1 flex flex-col items-center justify-center px-8 py-12">
+        <div className="w-full max-w-sm space-y-8">
+          {/* Logo / title */}
+          <div className="space-y-2 text-center">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 mb-4">
+              <ShieldCheck className="w-6 h-6 text-primary" />
+            </div>
+            <h1 className="text-2xl font-bold text-foreground tracking-tight">Portfolio CMS</h1>
+            <p className="text-sm text-muted-foreground">Sign in to manage your portfolio content.</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="space-y-1.5">
+              <Label htmlFor="login-username">Username</Label>
+              <Input
+                id="login-username"
+                autoComplete="username"
+                placeholder="admin"
+                value={username}
+                onChange={(e) => { setUsername(e.target.value); setError(""); }}
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="login-password">Password</Label>
+              <div className="relative">
+                <Input
+                  id="login-password"
+                  type={showPw ? "text" : "password"}
+                  autoComplete="current-password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => { setPassword(e.target.value); setError(""); }}
+                  className="pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPw((v) => !v)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label={showPw ? "Hide password" : "Show password"}
+                >
+                  {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2.5">
+              <Switch
+                id="remember-me"
+                checked={remember}
+                onCheckedChange={setRemember}
+              />
+              <Label htmlFor="remember-me" className="text-sm cursor-pointer">
+                Remember me
+              </Label>
+            </div>
+
+            {error && (
+              <p className="text-sm text-destructive font-medium">{error}</p>
+            )}
+
+            <Button type="submit" className="w-full gap-2">
+              <Lock className="w-4 h-4" />
+              Sign In
+            </Button>
+          </form>
+
+          <p className="text-center text-xs text-muted-foreground">
+            Default credentials: <span className="font-mono text-foreground">admin / admin</span>
+          </p>
+        </div>
+      </div>
+
+      {/* ── Right: decorative image panel ── */}
+      <div className="hidden lg:flex flex-1 relative overflow-hidden bg-gradient-to-br from-primary/20 via-background to-accent/10">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/10 to-background/60" />
+        <img
+          src="/admin-hero.png"
+          alt="Portfolio preview"
+          className="absolute inset-0 w-full h-full object-cover object-center opacity-80"
+        />
+        <div className="relative z-10 mt-auto p-10">
+          <p className="text-2xl font-bold text-white drop-shadow-lg">Your Portfolio.</p>
+          <p className="text-sm text-white/70 mt-1 drop-shadow">Manage your content, skills, and projects — all in one place.</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Settings section ─────────────────────────────────────────────────────────
+function SettingsSection({
+  draft,
+  setDraft,
+  onLogout,
+}: {
+  draft: PortfolioContent;
+  setDraft: React.Dispatch<React.SetStateAction<PortfolioContent>>;
+  onLogout: () => void;
+}) {
+  const { toast } = useToast();
+  const id = draft.identity;
+  const set = (patch: Partial<typeof id>) =>
+    setDraft((d) => ({ ...d, identity: { ...d.identity, ...patch } }));
+
+  const [newUsername, setNewUsername] = useState(() => getStoredCreds().username);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPw, setShowPw] = useState(false);
+
+  const handleSaveCreds = () => {
+    if (!newUsername.trim()) {
+      toast({ title: "Error", description: "Username cannot be empty.", variant: "destructive" });
+      return;
+    }
+    if (newPassword && newPassword !== confirmPassword) {
+      toast({ title: "Error", description: "Passwords do not match.", variant: "destructive" });
+      return;
+    }
+    const current = getStoredCreds();
+    saveStoredCreds(newUsername.trim(), newPassword || current.password);
+    setNewPassword("");
+    setConfirmPassword("");
+    toast({ title: "Credentials updated", description: "Your admin username/password have been saved." });
+  };
+
+  return (
+    <div className="space-y-8">
+      {/* SEO / Meta */}
+      <div>
+        <p className="text-sm font-semibold text-foreground mb-3">SEO &amp; Meta Tags</p>
+        <p className="text-xs text-muted-foreground mb-4">
+          These values update the browser tab title and the <code>&lt;meta name="description"&gt;</code> tag used by search engines and social sharing.
+        </p>
+        <div className="space-y-5 max-w-xl">
+          <div className="space-y-1.5">
+            <Label htmlFor="seo-title">Page Title</Label>
+            <Input
+              id="seo-title"
+              value={id.seoTitle}
+              onChange={(e) => set({ seoTitle: e.target.value })}
+              placeholder="Your Name | Developer"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="seo-desc">Meta Description</Label>
+            <Textarea
+              id="seo-desc"
+              rows={3}
+              value={id.seoDescription}
+              onChange={(e) => set({ seoDescription: e.target.value })}
+              placeholder="A short description of your portfolio (≤160 characters)."
+              className="resize-none"
+            />
+            <p className="text-xs text-muted-foreground">
+              {id.seoDescription?.length ?? 0} / 160 characters
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <Separator />
+
+      {/* Admin credentials */}
+      <div>
+        <p className="text-sm font-semibold text-foreground mb-3">Admin Credentials</p>
+        <p className="text-xs text-muted-foreground mb-4">
+          Change the username and password used to sign in to this CMS. Leave the password field blank to keep the existing password.
+        </p>
+        <div className="space-y-5 max-w-sm">
+          <div className="space-y-1.5">
+            <Label htmlFor="new-username">Username</Label>
+            <Input
+              id="new-username"
+              autoComplete="username"
+              value={newUsername}
+              onChange={(e) => setNewUsername(e.target.value)}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="new-password">New Password</Label>
+            <div className="relative">
+              <Input
+                id="new-password"
+                type={showPw ? "text" : "password"}
+                autoComplete="new-password"
+                placeholder="Leave blank to keep current"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                className="pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPw((v) => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                aria-label={showPw ? "Hide" : "Show"}
+              >
+                {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="confirm-password">Confirm Password</Label>
+            <Input
+              id="confirm-password"
+              type="password"
+              autoComplete="new-password"
+              placeholder="Re-enter new password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
+          <Button size="sm" onClick={handleSaveCreds} className="gap-2">
+            <ShieldCheck className="w-3.5 h-3.5" />
+            Update Credentials
+          </Button>
+        </div>
+      </div>
+
+      <Separator />
+
+      {/* Sign out */}
+      <div>
+        <p className="text-sm font-semibold text-foreground mb-3">Session</p>
+        <Button variant="outline" size="sm" onClick={onLogout} className="text-destructive border-destructive/40 hover:bg-destructive/10 gap-2">
+          <Lock className="w-3.5 h-3.5" />
+          Sign Out
+        </Button>
+      </div>
+    </div>
+  );
+}
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function Field({
@@ -592,8 +887,28 @@ export default function AdminPage() {
   const [, navigate] = useLocation();
   const { toast } = useToast();
 
-  // Local draft — holds unsaved edits
+  // ── Auth state (must be before any early return) ─────────────────────────────
+  const [authed, setAuthed] = useState(() => isLoggedIn());
+
+  // ── CMS draft state ──────────────────────────────────────────────────────────
   const [draft, setDraft] = useState<PortfolioContent>(() => structuredClone(content));
+
+  // Keep draft in sync when content is reset externally
+  useEffect(() => {
+    if (!authed) return;
+    setDraft(structuredClone(content));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authed]);
+
+  const handleLogout = () => {
+    clearSession();
+    setAuthed(false);
+    toast({ title: "Signed out", description: "You have been signed out of the CMS." });
+  };
+
+  if (!authed) {
+    return <AdminLogin onLogin={() => setAuthed(true)} />;
+  }
 
   const handleSave = () => {
     updateContent(draft);
@@ -643,12 +958,13 @@ export default function AdminPage() {
         </div>
 
         <Tabs defaultValue="identity">
-          <TabsList className="mb-8 grid w-full grid-cols-5">
+          <TabsList className="mb-8 grid w-full grid-cols-6">
             <TabsTrigger value="identity">Identity</TabsTrigger>
             <TabsTrigger value="about">About</TabsTrigger>
             <TabsTrigger value="socials">Socials</TabsTrigger>
             <TabsTrigger value="projects">Projects</TabsTrigger>
             <TabsTrigger value="skills">Skills</TabsTrigger>
+            <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
 
           <TabsContent value="identity">
@@ -689,6 +1005,14 @@ export default function AdminPage() {
               desc="Your technical skills organized into categories."
             />
             <SkillsSection draft={draft} setDraft={setDraft} />
+          </TabsContent>
+
+          <TabsContent value="settings">
+            <SectionTitle
+              title="Settings"
+              desc="SEO meta tags, admin login credentials, and session management."
+            />
+            <SettingsSection draft={draft} setDraft={setDraft} onLogout={handleLogout} />
           </TabsContent>
         </Tabs>
       </main>

@@ -48,6 +48,10 @@ export interface Identity {
   email: string;
   location: string;
   availableRemote: boolean;
+  /** SEO: browser tab title */
+  seoTitle: string;
+  /** SEO: meta description */
+  seoDescription: string;
 }
 
 export type SocialPlatform = "GitHub" | "LinkedIn" | "Twitter";
@@ -105,6 +109,8 @@ export const defaultContent: PortfolioContent = {
     email: "alex.chen@dev.io",
     location: "San Francisco, CA",
     availableRemote: true,
+    seoTitle: "Alex Chen | Full-Stack Developer & Creative Technologist",
+    seoDescription: "Portfolio of Alex Chen. I build things for the web that are fast, beautiful, and intentional.",
   },
   bio: [
     "I build things for the web that are fast, beautiful, and intentional. With 5+ years of experience spanning React, Node.js, and cloud infrastructure, I love turning complex problems into elegant solutions.",

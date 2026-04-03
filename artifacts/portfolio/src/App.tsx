@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ContentProvider } from "@/context/ContentContext";
 
+import { MetaTags } from "@/components/MetaTags";
 import { Navigation } from "@/components/Navigation";
 import { StarField } from "@/components/StarField";
 import { Hero } from "@/components/Hero";
@@ -41,6 +42,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
         <ContentProvider>
+          <MetaTags />
           <TooltipProvider>
             <Router>
               <Switch>
