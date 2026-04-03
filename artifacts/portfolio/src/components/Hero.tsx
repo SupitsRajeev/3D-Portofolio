@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Github, Linkedin, MessageCircle, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProfilePhoto } from "./ProfilePhoto";
+import { LottieAnimation } from "@/components/LottieAnimation";
 import { defaultContent } from "@/content";
 
 // Maps every supported social platform to a Lucide icon.
@@ -13,6 +14,11 @@ const SOCIAL_ICONS: Record<string, React.ComponentType<{ className?: string }>> 
   LinkedIn: Linkedin,
   Email:    Mail,
 };
+
+// Free "coding / developer" animation from LottieFiles.
+// Swap this URL for any animation you prefer from https://lottiefiles.com
+const CODING_LOTTIE_URL =
+  "https://lottie.host/a5498e4d-e6b0-4e4a-888b-82fb4a49bfce/JJAL9B0PcB.lottie";
 
 export function Hero() {
   const { identity, socials } = defaultContent;
@@ -147,7 +153,7 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* ── Right: animated profile photo ── */}
+          {/* ── Right: animated profile photo + Lottie accent ── */}
           <motion.div
             className="w-full lg:w-1/2 flex items-center justify-center relative h-[380px] md:h-[460px] lg:h-[580px]"
             initial={{ opacity: 0, scale: 0.92 }}
@@ -159,6 +165,18 @@ export function Hero() {
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-primary/20 dark:bg-primary/25 blur-[80px]" />
             </div>
             <ProfilePhoto size={320} />
+
+            {/* Lottie coding animation — floating badge bottom-right */}
+            <motion.div
+              className="absolute bottom-6 right-4 md:bottom-10 md:right-8 pointer-events-none"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1, ease: "easeOut" }}
+            >
+              <div className="w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-card/60 dark:bg-card/50 border border-border/60 backdrop-blur-md shadow-lg overflow-hidden flex items-center justify-center">
+                <LottieAnimation src={CODING_LOTTIE_URL} className="w-full h-full" />
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
