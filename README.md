@@ -2,7 +2,7 @@
 
 ## Overview
 
-Personal portfolio website for "Alex Chen" — full-stack developer and creative technologist.
+Personal portfolio website for "Rajeev Neupane" — full-stack developer and creative technologist.
 
 ## Stack
 
