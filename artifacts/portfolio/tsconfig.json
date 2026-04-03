@@ -17,11 +17,12 @@
     "noFallthroughCasesInSwitch": true,
     "alwaysStrict": true,
     "skipLibCheck": true,
-    "types": ["node", "vite/client"],
+    "plugins": [{ "name": "next" }],
+    "types": ["node"],
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "next.config.ts", ".next/types/**/*.ts"],
   "exclude": ["node_modules", "build", "dist", "**/*.test.ts"]
 }

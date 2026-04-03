@@ -1,6 +1,8 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { FloatingShapes3D } from "./FloatingShapes3D";
-import { useContent } from "@/context/ContentContext";
+import { defaultContent } from "@/content";
 import { HIGHLIGHT_ICONS } from "@/content";
 import { FancyIconBox } from "./FancyIconBox";
 
@@ -14,8 +16,7 @@ const itemVariants = {
 };
 
 export function About() {
-  const { content } = useContent();
-  const { bio, aboutHighlights, identity } = content;
+  const { bio, aboutHighlights, identity } = defaultContent;
   return (
     <section id="about" className="py-24 md:py-32 bg-background relative overflow-hidden">
       {/* Subtle glow in dark mode */}
