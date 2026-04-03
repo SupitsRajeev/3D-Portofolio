@@ -59,7 +59,7 @@ export function ThreeDShowcase() {
 
           <EffectCard
             title="Particle System"
-            description="2 000+ animated particles with per-vertex color."
+            description="2,000+ animated particles with per-vertex color."
             borderColor="border-violet-500/40"
           >
             <ParticleEffect />
