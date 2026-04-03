@@ -172,6 +172,6 @@ export const defaultContent: PortfolioContent = {
     { category: "Frontend",       icon: "Monitor",  items: ["React", "Next.js", "Tailwind CSS", "Framer Motion", "Three.js", "Redux", "Vue.js", "SASS/SCSS", "Vite", "Storybook"], colorScheme: "cyan"    },
     { category: "Backend",        icon: "Server",   items: ["Node.js", "Express", "PostgreSQL", "MongoDB", "Redis", "REST APIs", "GraphQL", "MySQL", "Prisma", "WebSockets"],   colorScheme: "emerald" },
     { category: "DevOps & Tools", icon: "Settings", items: ["AWS", "Docker", "Git", "CI/CD", "Vercel", "Figma", "Kubernetes", "GitHub Actions", "Linux", "Nginx"],              colorScheme: "orange"  },
-    { category: "Testing & QA",   icon: "TestTube", items: ["Jest", "Vitest", "Cypress", "React Testing Library", "ESLint", "Prettier", "Storybook"], colorScheme: "rose"    },
+    { category: "Testing & QA",   icon: "TestTube", items: ["Jest", "Vitest", "Cypress", "React Testing Library", "ESLint", "Prettier"], colorScheme: "rose"    },
   ],
 };

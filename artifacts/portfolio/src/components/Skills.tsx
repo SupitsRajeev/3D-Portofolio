@@ -10,8 +10,8 @@ import {
   SiNodedotjs, SiPostgresql, SiMongodb, SiRedis, SiPrisma, SiMysql,
   SiDocker, SiGit, SiVercel, SiFigma,
   SiKubernetes, SiGithubactions, SiLinux, SiJest, SiNginx,
-  SiCypress, SiEslint, SiPrettier,
-  SiGo, SiRust, SiGnubash, SiThreedotjs, SiFramer, SiWebpack, SiVitest,
+  SiCypress, SiEslint, SiPrettier, SiTestinglibrary,
+  SiGo, SiRust, SiGnubash, SiThreedotjs, SiFramer, SiWebpack, SiVitest, SiCplusplus, SiExpress, SiSocketdotio,
 } from "react-icons/si";
 import type { IconType } from "react-icons";
 
@@ -24,6 +24,7 @@ const TECH_ICONS_SI: Record<string, IconType> = {
   "Go":                     SiGo,
   "Rust":                   SiRust,
   "Bash":                   SiGnubash,
+  "C++":                    SiCplusplus,
   "React":                  SiReact,
   "Next.js":                SiNextdotjs,
   "Tailwind CSS":           SiTailwindcss,
@@ -36,9 +37,11 @@ const TECH_ICONS_SI: Record<string, IconType> = {
   "Framer Motion":          SiFramer,
   "Webpack":                SiWebpack,
   "Node.js":                SiNodedotjs,
+  "Express":                SiExpress,
   "PostgreSQL":             SiPostgresql,
   "MongoDB":                SiMongodb,
   "Redis":                  SiRedis,
+  "WebSockets":             SiSocketdotio,
   "Prisma":                 SiPrisma,
   "MySQL":                  SiMysql,
   "Docker":                 SiDocker,
@@ -52,6 +55,7 @@ const TECH_ICONS_SI: Record<string, IconType> = {
   "Jest":                   SiJest,
   "Vitest":                 SiVitest,
   "Cypress":                SiCypress,
+  "React Testing Library":  SiTestinglibrary,
   "ESLint":                 SiEslint,
   "Prettier":               SiPrettier,
 };
