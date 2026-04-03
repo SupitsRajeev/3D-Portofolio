@@ -18,11 +18,17 @@ export function AdminLogin() {
     e.preventDefault();
     setError("");
     setLoading(true);
-    const ok = await login(username.trim(), password);
-    setLoading(false);
-    if (!ok) {
-      setError("Invalid username or password.");
+    try {
+      const ok = await login(username.trim(), password);
+      if (!ok) {
+        setError("Invalid username or password.");
+        setPassword("");
+      }
+    } catch {
+      setError("Login failed. Please try again.");
       setPassword("");
+    } finally {
+      setLoading(false);
     }
   };
 
