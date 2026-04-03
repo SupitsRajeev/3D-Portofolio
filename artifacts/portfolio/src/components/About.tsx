@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { FloatingShapes3D } from "./FloatingShapes3D";
 import { useContent } from "@/context/ContentContext";
 import { HIGHLIGHT_ICONS } from "@/content";
+import { FancyIconBox } from "./FancyIconBox";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -52,14 +53,18 @@ export function About() {
                   return (
                   <motion.div
                     key={title}
-                    className="flex gap-4 p-4 rounded-xl border border-border/50 bg-card/60 backdrop-blur-sm hover:border-primary/30 dark:hover:shadow-[0_0_20px_hsl(var(--primary)/0.08)] transition-all duration-300 group cursor-default"
-                    whileHover={{ y: -2 }}
+                    className="group flex gap-4 p-5 rounded-2xl border border-border/50 bg-card/60 backdrop-blur-sm hover:border-primary/40 dark:hover:shadow-[0_0_28px_hsl(var(--primary)/0.1)] transition-all duration-300 cursor-default relative overflow-hidden"
+                    whileHover={{ y: -3 }}
                   >
-                    <div className="mt-0.5 bg-primary/10 dark:bg-primary/15 p-2.5 rounded-lg text-primary shrink-0 group-hover:bg-primary/20 dark:group-hover:drop-shadow-[0_0_8px_hsl(var(--primary)/0.5)] transition-all duration-300">
-                      <Icon className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <h3 className="text-foreground font-semibold mb-1 text-sm">{title}</h3>
+                    {/* Gradient sheen on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl" />
+                    <FancyIconBox
+                      icon={Icon}
+                      variant="highlight"
+                      size="md"
+                    />
+                    <div className="relative z-10">
+                      <h3 className="text-foreground font-semibold mb-1 text-sm group-hover:text-primary transition-colors duration-200">{title}</h3>
                       <p className="text-muted-foreground text-sm leading-relaxed">{desc}</p>
                     </div>
                   </motion.div>

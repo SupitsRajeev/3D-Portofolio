@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { Github, Linkedin, Twitter, Heart } from "lucide-react";
 import { useContent } from "@/context/ContentContext";
 
@@ -23,27 +24,32 @@ export function Footer() {
           </p>
         </div>
 
-        <div className="flex items-center gap-4 text-muted-foreground">
+        <div className="flex items-center gap-3">
           {socials.map(({ href, platform }) => {
             const Icon = SOCIAL_ICONS[platform as keyof typeof SOCIAL_ICONS];
             if (!Icon) return null;
             return (
-              <a
+              <motion.a
                 key={platform}
                 href={href}
                 target="_blank"
                 rel="noreferrer"
                 aria-label={platform}
-                className="p-2 rounded-lg hover:text-primary dark:hover:drop-shadow-[0_0_8px_hsl(var(--primary)/0.7)] hover:-translate-y-0.5 transition-all duration-200"
+                className="relative flex items-center justify-center w-10 h-10 rounded-full border border-border/60 bg-card/60 text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/8 transition-colors duration-200 group overflow-hidden"
+                whileHover={{ y: -3, scale: 1.1 }}
+                whileTap={{ scale: 0.93 }}
+                transition={{ type: "spring", stiffness: 400, damping: 20 }}
               >
-                <Icon className="h-5 w-5" />
-              </a>
+                {/* Glow pulse on hover */}
+                <span className="absolute inset-0 rounded-full bg-primary/0 group-hover:bg-primary/10 group-hover:shadow-[0_0_16px_4px_hsl(var(--primary)/0.25)] transition-all duration-300" />
+                <Icon className="h-4 w-4 relative z-10 group-hover:drop-shadow-[0_0_6px_hsl(var(--primary)/0.8)] transition-all duration-200" />
+              </motion.a>
             );
           })}
           <a
             href="/admin"
             aria-label="Content Manager"
-            className="p-2 rounded-lg text-muted-foreground/30 hover:text-muted-foreground transition-colors duration-200 text-xs font-mono"
+            className="flex items-center justify-center w-10 h-10 rounded-full border border-border/30 text-muted-foreground/30 hover:text-muted-foreground hover:border-border/60 transition-colors duration-200 text-xs font-mono"
             title="Edit content"
           >
             ✎

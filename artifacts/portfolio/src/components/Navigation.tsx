@@ -18,11 +18,30 @@ export function Navigation() {
   const { content } = useContent();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Track which section is in view for active highlight
+  useEffect(() => {
+    const sections = navLinks.map((l) => l.href.slice(1));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { threshold: 0.4 }
+    );
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -48,17 +67,43 @@ export function Navigation() {
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
           <ul className="flex items-center gap-1 text-sm font-medium">
-            {navLinks.map(({ name, href, Icon }) => (
-              <li key={name}>
-                <a
-                  href={href}
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 dark:hover:text-primary dark:hover:[&_svg]:drop-shadow-[0_0_6px_hsl(var(--primary)/0.7)] transition-all duration-200 group"
-                >
-                  <Icon className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 transition-all duration-200" />
-                  {name}
-                </a>
-              </li>
-            ))}
+            {navLinks.map(({ name, href, Icon }) => {
+              const isActive = activeSection === href.slice(1);
+              return (
+                <li key={name}>
+                  <a
+                    href={href}
+                    className={cn(
+                      "relative flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 group",
+                      isActive
+                        ? "text-primary bg-primary/8"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                    )}
+                  >
+                    {/* Icon badge */}
+                    <span
+                      className={cn(
+                        "flex items-center justify-center w-6 h-6 rounded-md transition-all duration-200",
+                        isActive
+                          ? "bg-primary/15 text-primary drop-shadow-[0_0_6px_hsl(var(--primary)/0.7)]"
+                          : "group-hover:bg-primary/10 group-hover:text-primary group-hover:drop-shadow-[0_0_5px_hsl(var(--primary)/0.5)]"
+                      )}
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                    </span>
+                    {name}
+                    {/* Active underline */}
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-underline"
+                        className="absolute bottom-0.5 left-3 right-3 h-[2px] rounded-full bg-primary"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
 
           <Button
@@ -105,18 +150,36 @@ export function Navigation() {
             className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-border/50 py-2 shadow-2xl"
           >
             <ul className="flex flex-col py-4">
-              {navLinks.map(({ name, href, Icon }) => (
-                <li key={name}>
-                  <a
-                    href={href}
-                    className="flex items-center gap-3 px-8 py-3 text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <Icon className="w-4 h-4" />
-                    <span className="font-medium">{name}</span>
-                  </a>
-                </li>
-              ))}
+              {navLinks.map(({ name, href, Icon }) => {
+                const isActive = activeSection === href.slice(1);
+                return (
+                  <li key={name}>
+                    <a
+                      href={href}
+                      className={cn(
+                        "flex items-center gap-3 px-8 py-3 transition-colors",
+                        isActive
+                          ? "text-primary bg-primary/5"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted/40"
+                      )}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <span
+                        className={cn(
+                          "flex items-center justify-center w-7 h-7 rounded-lg transition-all duration-200",
+                          isActive ? "bg-primary/15 text-primary" : "bg-muted/50"
+                        )}
+                      >
+                        <Icon className="w-4 h-4" />
+                      </span>
+                      <span className="font-medium">{name}</span>
+                      {isActive && (
+                        <span className="ml-auto w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                      )}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </motion.div>
         )}

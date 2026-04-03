@@ -2,6 +2,11 @@ import {
   Code, Monitor, Server, Settings, Database, Globe, Terminal, Cpu, Wrench,
   Brain, Layers2, Leaf, Rocket, Star, Zap, Package, Cloud,
   Compass, Layers, Code2, Sparkles, BookOpen, Music,
+  // Additional icons to fill all gaps
+  HelpCircle, GitBranch, Box, Bolt, Flame, Gem, Hexagon,
+  Blocks, Braces, Workflow, TestTube, Layout, PenTool,
+  BarChart2, ShieldCheck, Lightbulb,
+  Mail, Globe2, Play, Film,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -23,18 +28,29 @@ export const COLOR_SCHEMES: Record<
 };
 
 // ─── Icon registries ──────────────────────────────────────────────────────────
+/** Fallback icon rendered when a key doesn't match any registry entry */
+export const FALLBACK_ICON = HelpCircle;
+
 export const SKILL_ICONS: Record<string, LucideIcon> = {
   Code, Monitor, Server, Settings, Database, Globe, Terminal, Cpu, Wrench,
   Brain, Layers2, Leaf, Rocket, Star, Zap, Package, Cloud,
   Compass, Layers, Code2, Sparkles, BookOpen, Music,
+  // Extended set
+  GitBranch, Box, Bolt, Flame, Gem, Hexagon, Blocks, Braces,
+  Workflow, TestTube, Layout, PenTool, BarChart2, ShieldCheck, Lightbulb,
+  Mail, Globe2, Play, Film,
 };
 
 export const PROJECT_ICONS: Record<string, LucideIcon> = {
   Brain, Layers2, Leaf, Rocket, Star, Zap, Package, Cloud, Code2, Globe, Database, Monitor,
+  // Extended set
+  Flame, Gem, Hexagon, Blocks, GitBranch, Box, Braces, BarChart2, Play, Film, Globe2,
 };
 
 export const HIGHLIGHT_ICONS: Record<string, LucideIcon> = {
   Compass, Layers, Code2, Sparkles, Wrench, BookOpen, Settings, Zap, Star, Rocket, Globe,
+  // Extended set
+  ShieldCheck, Lightbulb, Flame, Gem, GitBranch, Brain, Workflow, PenTool, Layout,
 };
 
 // ─── Types ────────────────────────────────────────────────────────────────────

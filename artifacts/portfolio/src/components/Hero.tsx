@@ -1,10 +1,16 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Github, Linkedin, Twitter, MessageCircle } from "lucide-react";
+import { ArrowRight, Github, Linkedin, MessageCircle, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Hero3D } from "./Hero3D";
+import { ProfilePhoto } from "./ProfilePhoto";
 import { useContent } from "@/context/ContentContext";
 
-const SOCIAL_ICONS = { GitHub: Github, LinkedIn: Linkedin, Twitter };
+// Maps every supported social platform to a Lucide icon.
+// Twitter icon was removed from lucide-react v0.460+; we fall back to a text label.
+const SOCIAL_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  GitHub:   Github,
+  LinkedIn: Linkedin,
+  Email:    Mail,
+};
 
 export function Hero() {
   const { content } = useContent();
@@ -98,38 +104,60 @@ export function Hero() {
 
             {/* Social links */}
             <motion.div
-              className="flex items-center gap-4 text-muted-foreground"
+              className="flex items-center gap-3 text-muted-foreground"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.5 }}
             >
               {socials.map(({ href, platform }) => {
-                const Icon = SOCIAL_ICONS[platform as keyof typeof SOCIAL_ICONS];
-                if (!Icon) return null;
+                const Icon = SOCIAL_ICONS[platform];
+                if (!Icon) {
+                  // Text fallback for platforms without a registered icon (e.g. Twitter/X)
+                  return (
+                    <a
+                      key={platform}
+                      href={href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={platform}
+                      className="p-2 rounded-lg text-xs font-mono hover:text-primary hover:-translate-y-0.5 transition-all duration-200"
+                    >
+                      {platform}
+                    </a>
+                  );
+                }
                 return (
-                  <a
+                  <motion.a
                     key={platform}
                     href={href}
                     target="_blank"
                     rel="noreferrer"
                     aria-label={platform}
-                    className="p-2 rounded-lg hover:text-primary dark:hover:drop-shadow-[0_0_8px_hsl(var(--primary)/0.7)] hover:-translate-y-0.5 transition-all duration-200"
+                    className="relative flex items-center justify-center w-10 h-10 rounded-full border border-border/60 bg-card/50 text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/8 transition-colors duration-200 group overflow-hidden"
+                    whileHover={{ y: -3, scale: 1.1 }}
+                    whileTap={{ scale: 0.92 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 20 }}
                   >
-                    <Icon className="h-5 w-5" />
-                  </a>
+                    <span className="absolute inset-0 rounded-full group-hover:shadow-[0_0_16px_4px_hsl(var(--primary)/0.2)] transition-all duration-300" />
+                    <Icon className="h-4 w-4 relative z-10 group-hover:drop-shadow-[0_0_6px_hsl(var(--primary)/0.8)] transition-all duration-200" />
+                  </motion.a>
                 );
               })}
             </motion.div>
           </div>
 
-          {/* ── Right: 3D canvas, fully contained ── */}
+          {/* ── Right: animated profile photo ── */}
           <motion.div
-            className="w-full lg:w-1/2 relative h-[420px] md:h-[520px] lg:h-[640px]"
-            initial={{ opacity: 0, scale: 0.96 }}
+            className="w-full lg:w-1/2 flex items-center justify-center relative h-[380px] md:h-[460px] lg:h-[580px]"
+            initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            transition={{ duration: 0.8, delay: 0.25, ease: "easeOut" }}
           >
-            <Hero3D />
+            {/* Soft behind-glow */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-primary/20 dark:bg-primary/25 blur-[80px]" />
+            </div>
+            <ProfilePhoto size={320} />
           </motion.div>
         </div>
       </div>

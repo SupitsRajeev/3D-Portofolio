@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { FloatingShapes3D } from "./FloatingShapes3D";
 import { useContent } from "@/context/ContentContext";
 import { COLOR_SCHEMES, SKILL_ICONS } from "@/content";
+import { FancyIconBox } from "./FancyIconBox";
 
 export function Skills() {
   const { content } = useContent();
@@ -38,14 +39,22 @@ export function Skills() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.55, delay: index * 0.1 }}
-              className="space-y-4 backdrop-blur-sm"
+              className="space-y-4 backdrop-blur-sm group/card p-6 rounded-2xl border border-border/40 bg-card/40 hover:border-border/70 hover:bg-card/60 transition-all duration-300"
             >
               {/* Category header */}
-              <div className="flex items-center gap-3 mb-5">
-                <div className={`p-2 rounded-lg ${scheme.skillBg} ${scheme.skillColor} dark:drop-shadow-[0_0_8px_currentColor]`}>
-                  <Icon className="w-4 h-4" />
+              <div className="flex items-center gap-4 mb-6">
+                <FancyIconBox
+                  icon={Icon}
+                  color={scheme.skillColor}
+                  bg={scheme.skillBg}
+                  variant="skill"
+                  size="md"
+                  pulse
+                />
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground tracking-tight">{skillGroup.category}</h3>
+                  <p className={`text-xs font-mono ${scheme.skillColor} opacity-70 mt-0.5`}>{skillGroup.items.length} technologies</p>
                 </div>
-                <h3 className="text-lg font-semibold text-foreground tracking-tight">{skillGroup.category}</h3>
               </div>
 
               <div className="flex flex-wrap gap-2.5">
@@ -57,9 +66,18 @@ export function Skills() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.3, delay: index * 0.08 + i * 0.04 }}
                     whileHover={{ scale: 1.08, y: -2 }}
-                    className="px-4 py-2 bg-card/80 dark:bg-card/60 backdrop-blur-sm border border-border/60 rounded-lg text-sm text-muted-foreground hover:text-primary hover:border-primary/40 dark:hover:border-primary/40 hover:bg-primary/5 dark:hover:shadow-[0_0_12px_hsl(var(--primary)/0.15)] transition-all duration-200 shadow-sm cursor-default font-medium"
+                    className="relative px-4 py-2 bg-card/80 dark:bg-card/60 backdrop-blur-sm border border-border/60 rounded-lg text-sm text-muted-foreground hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all duration-200 shadow-sm cursor-default font-medium overflow-hidden group/tag"
                   >
-                    {item}
+                    {/* Hover shine */}
+                    <motion.span
+                      className="absolute inset-0 pointer-events-none"
+                      initial={{ x: "-100%", opacity: 0 }}
+                      whileHover={{ x: "120%", opacity: 1 }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      <span className="block w-1/2 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12" />
+                    </motion.span>
+                    <span className="relative">{item}</span>
                   </motion.div>
                 ))}
               </div>
