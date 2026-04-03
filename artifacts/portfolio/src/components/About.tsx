@@ -1,10 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { FloatingShapes3D } from "./FloatingShapes3D";
 import { defaultContent } from "@/content";
 import { HIGHLIGHT_ICONS } from "@/content";
 import { FancyIconBox } from "./FancyIconBox";
+import { useOrb } from "@/context/OrbContext";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -17,8 +19,23 @@ const itemVariants = {
 
 export function About() {
   const { bio, aboutHighlights, identity } = defaultContent;
+  const { isExpanded, setIsExpanded } = useOrb();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Trigger the orb expansion / collapse based on section visibility
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsExpanded(entry.isIntersecting),
+      { threshold: 0.25 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [setIsExpanded]);
+
   return (
-    <section id="about" className="py-24 md:py-32 bg-background relative overflow-hidden">
+    <section ref={sectionRef} id="about" className="py-24 md:py-32 bg-background relative overflow-hidden">
       {/* Subtle glow in dark mode */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary/5 blur-[100px] rounded-full dark:bg-primary/8" />
@@ -74,17 +91,51 @@ export function About() {
               </motion.div>
             </div>
 
-            {/* 3D avatar card */}
+            {/* Portrait / 3D card – connected to the floating orb via layoutId */}
             <motion.div variants={itemVariants} className="relative group">
-              <div className="absolute -inset-3 bg-gradient-to-tr from-primary/30 to-cyan-500/20 opacity-20 rounded-2xl blur-xl group-hover:opacity-40 transition duration-500" />
-              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-border/60 bg-card">
-                <FloatingShapes3D variant="about" className="opacity-90" />
-                <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-card to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-                  <p className="text-xs font-mono text-muted-foreground/60 tracking-widest uppercase">{identity.name}</p>
-                  <p className="text-xs font-mono text-primary/50 tracking-wider">Full-Stack</p>
-                </div>
-              </div>
+              <AnimatePresence mode="wait">
+                {isExpanded ? (
+                  /* Expanded portrait – shares layoutId with FloatingOrb */
+                  <motion.div
+                    layoutId="profile-orb"
+                    key="about-portrait"
+                    className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-border/60 bg-card shadow-xl"
+                    initial={{ borderRadius: "50%" }}
+                    animate={{ borderRadius: "16px" }}
+                    exit={{ borderRadius: "50%", transition: { duration: 0.25 } }}
+                    transition={{ type: "spring", stiffness: 180, damping: 24 }}
+                  >
+                    <div className="absolute -inset-3 bg-gradient-to-tr from-primary/30 to-cyan-500/20 opacity-20 rounded-2xl blur-xl group-hover:opacity-40 transition duration-500 pointer-events-none" />
+                    <img
+                      src="/profile.jpg"
+                      alt={identity.name}
+                      className="w-full h-full object-cover object-top"
+                      draggable={false}
+                    />
+                    <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-card to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                      <p className="text-xs font-mono text-muted-foreground/60 tracking-widest uppercase">{identity.name}</p>
+                      <p className="text-xs font-mono text-primary/50 tracking-wider">Full-Stack</p>
+                    </div>
+                  </motion.div>
+                ) : (
+                  /* Fallback 3D card while orb hasn't expanded yet */
+                  <motion.div
+                    key="about-3d"
+                    className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-border/60 bg-card"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0, transition: { duration: 0.2 } }}
+                  >
+                    <FloatingShapes3D variant="about" className="opacity-90" />
+                    <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-card to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                      <p className="text-xs font-mono text-muted-foreground/60 tracking-widest uppercase">{identity.name}</p>
+                      <p className="text-xs font-mono text-primary/50 tracking-wider">Full-Stack</p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           </div>
         </motion.div>
@@ -92,3 +143,4 @@ export function About() {
     </section>
   );
 }
+
