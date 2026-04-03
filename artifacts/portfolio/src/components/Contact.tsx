@@ -5,9 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { useContent } from "@/context/ContentContext";
 
 export function Contact() {
   const { toast } = useToast();
+  const { content } = useContent();
+  const { identity } = content;
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -68,7 +71,7 @@ export function Contact() {
                 title: "Email",
                 content: (
                   <a href="mailto:alex.chen@dev.io" className="text-muted-foreground hover:text-primary transition-colors text-sm">
-                    alex.chen@dev.io
+                    {identity.email}
                   </a>
                 ),
               },
@@ -77,8 +80,10 @@ export function Contact() {
                 title: "Location",
                 content: (
                   <p className="text-muted-foreground text-sm">
-                    San Francisco, CA<br />
-                    <span className="text-primary/70">Available for remote</span>
+                    {identity.location}<br />
+                    {identity.availableRemote && (
+                      <span className="text-primary/70">Available for remote</span>
+                    )}
                   </p>
                 ),
               },

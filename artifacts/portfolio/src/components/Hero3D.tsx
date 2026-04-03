@@ -10,13 +10,15 @@ import {
 } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import {
-  TorusKnot,
+  Icosahedron,
+  Box,
+  Tetrahedron,
+  Octahedron,
   MeshDistortMaterial,
   Float,
   Trail,
   Sphere,
   Torus,
-  Octahedron,
 } from "@react-three/drei";
 import * as THREE from "three";
 

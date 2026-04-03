@@ -2,14 +2,13 @@ import { motion } from "framer-motion";
 import { ArrowRight, Github, Linkedin, Twitter, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Hero3D } from "./Hero3D";
+import { useContent } from "@/context/ContentContext";
 
-const socials = [
-  { href: "https://github.com",   Icon: Github,   label: "GitHub" },
-  { href: "https://linkedin.com", Icon: Linkedin,  label: "LinkedIn" },
-  { href: "https://twitter.com",  Icon: Twitter,   label: "Twitter" },
-];
+const SOCIAL_ICONS = { GitHub: Github, LinkedIn: Linkedin, Twitter };
 
 export function Hero() {
+  const { content } = useContent();
+  const { identity, socials } = content;
   return (
     <section
       id="home"
@@ -51,7 +50,7 @@ export function Hero() {
               transition={{ duration: 0.55, delay: 0.1 }}
             >
               I'm{" "}
-              <span className="text-foreground">Alex Chen</span>
+              <span className="text-foreground">{identity.name}</span>
               <span className="text-primary dark:drop-shadow-[0_0_18px_hsl(var(--primary)/0.55)]">.</span>
             </motion.h1>
 
@@ -62,7 +61,7 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Full-Stack Developer &amp; Creative Technologist building things for the web that are{" "}
+              {identity.title} building things for the web that are{" "}
               <span className="text-foreground font-medium">fast, beautiful,</span> and intentional.
             </motion.p>
 
@@ -104,18 +103,22 @@ export function Hero() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.5 }}
             >
-              {socials.map(({ href, Icon, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={label}
-                  className="p-2 rounded-lg hover:text-primary dark:hover:drop-shadow-[0_0_8px_hsl(var(--primary)/0.7)] hover:-translate-y-0.5 transition-all duration-200"
-                >
-                  <Icon className="h-5 w-5" />
-                </a>
-              ))}
+              {socials.map(({ href, platform }) => {
+                const Icon = SOCIAL_ICONS[platform as keyof typeof SOCIAL_ICONS];
+                if (!Icon) return null;
+                return (
+                  <a
+                    key={platform}
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={platform}
+                    className="p-2 rounded-lg hover:text-primary dark:hover:drop-shadow-[0_0_8px_hsl(var(--primary)/0.7)] hover:-translate-y-0.5 transition-all duration-200"
+                  >
+                    <Icon className="h-5 w-5" />
+                  </a>
+                );
+              })}
             </motion.div>
           </div>
 
