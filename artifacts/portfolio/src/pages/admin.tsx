@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLocation } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
@@ -893,13 +893,6 @@ export default function AdminPage() {
   // ── CMS draft state ──────────────────────────────────────────────────────────
   const [draft, setDraft] = useState<PortfolioContent>(() => structuredClone(content));
 
-  // Keep draft in sync when content is reset externally
-  useEffect(() => {
-    if (!authed) return;
-    setDraft(structuredClone(content));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authed]);
-
   const handleLogout = () => {
     clearSession();
     setAuthed(false);
@@ -907,7 +900,14 @@ export default function AdminPage() {
   };
 
   if (!authed) {
-    return <AdminLogin onLogin={() => setAuthed(true)} />;
+    return (
+      <AdminLogin
+        onLogin={() => {
+          setDraft(structuredClone(content));
+          setAuthed(true);
+        }}
+      />
+    );
   }
 
   const handleSave = () => {
