@@ -116,6 +116,7 @@
   --chart-4: 43 70% 55%;
   --chart-5: 27 80% 58%;
 
+  /* Font families — variables are injected by next/font/google in src/app/layout.tsx */
   --app-font-sans: var(--font-plus-jakarta-sans), sans-serif;
   --app-font-serif: Georgia, serif;
   --app-font-mono: var(--font-space-mono), monospace;

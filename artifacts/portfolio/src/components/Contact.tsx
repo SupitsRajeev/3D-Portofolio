@@ -32,7 +32,7 @@ export function Contact() {
         description: "Thanks for reaching out. I'll get back to you soon.",
       });
       (e.target as HTMLFormElement).reset();
-      // Reset success state after 4 s so the form can be used again
+      // Reset success state after 4 sec so the form can be used again
       setTimeout(() => setSubmitted(false), 4000);
     }, 1500);
   };
