@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
@@ -117,9 +116,10 @@
   --chart-4: 43 70% 55%;
   --chart-5: 27 80% 58%;
 
-  --app-font-sans: 'Plus Jakarta Sans', sans-serif;
+  /* Font families — variables are injected by next/font/google in src/app/layout.tsx */
+  --app-font-sans: var(--font-plus-jakarta-sans), sans-serif;
   --app-font-serif: Georgia, serif;
-  --app-font-mono: 'Space Mono', monospace;
+  --app-font-mono: var(--font-space-mono), monospace;
   --radius: 0.5rem;
 
   --shadow-2xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
