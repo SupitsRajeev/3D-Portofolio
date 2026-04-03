@@ -97,13 +97,13 @@ export interface PortfolioContent {
 // ─── Default content ──────────────────────────────────────────────────────────
 export const defaultContent: PortfolioContent = {
   identity: {
-    name: "Alex Chen",
-    firstName: "Alex",
+    name: "Rajeev Neupane",
+    firstName: "Rajeev",
     title: "Full-Stack Developer & Creative Technologist",
     tagline: "I build things for the web that are fast, beautiful, and intentional.",
     availableForWork: true,
-    email: "alex.chen@dev.io",
-    location: "San Francisco, CA",
+    email: "neupanerajeev203@gmail.com",
+    location: "Kalimati, Kathmandu",
     availableRemote: true,
   },
   bio: [
