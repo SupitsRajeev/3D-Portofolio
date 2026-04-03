@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://rajeevneupane.dev"),
   title: "Rajeev | Full-Stack Developer & Creative Technologist",
   description:
     "Portfolio of Rajeev Neupane. I build things for the web that are fast, beautiful, and intentional.",
