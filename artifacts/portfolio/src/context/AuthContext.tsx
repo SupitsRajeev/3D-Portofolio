@@ -31,9 +31,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = useCallback(
     async (username: string, password: string): Promise<boolean> => {
       const expectedUser = import.meta.env.VITE_ADMIN_USER ?? "admin";
-      const expectedHash = import.meta.env.VITE_ADMIN_PASS_HASH ?? "";
-      // Reject if the hash env var is not configured
-      if (!expectedHash) return false;
+      // Default hash is SHA-256 of "admin123" — override via VITE_ADMIN_PASS_HASH env var
+      const expectedHash =
+        import.meta.env.VITE_ADMIN_PASS_HASH ??
+        "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9";
       const inputHash = await sha256(password);
       if (username === expectedUser && inputHash === expectedHash) {
         sessionStorage.setItem(SESSION_KEY, "1");
