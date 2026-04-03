@@ -1,12 +1,12 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { FloatingShapes3D } from "./FloatingShapes3D";
-import { useContent } from "@/context/ContentContext";
-import { COLOR_SCHEMES, SKILL_ICONS } from "@/content";
+import { defaultContent, COLOR_SCHEMES, SKILL_ICONS } from "@/content";
 import { FancyIconBox } from "./FancyIconBox";
 
 export function Skills() {
-  const { content } = useContent();
-  const { skills } = content;
+  const { skills } = defaultContent;
   return (
     <section id="skills" className="py-24 md:py-32 bg-background relative overflow-hidden">
       {/* 3D floating background */}

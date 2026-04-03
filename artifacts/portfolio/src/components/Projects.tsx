@@ -1,8 +1,9 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { ArrowUpRight, Github, Link2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useContent } from "@/context/ContentContext";
-import { COLOR_SCHEMES, PROJECT_ICONS } from "@/content";
+import { defaultContent, COLOR_SCHEMES, PROJECT_ICONS } from "@/content";
 import { FancyIconBox } from "./FancyIconBox";
 
 const containerVariants = {
@@ -15,8 +16,7 @@ const itemVariants = {
 };
 
 export function Projects() {
-  const { content } = useContent();
-  const { projects } = content;
+  const { projects } = defaultContent;
   return (
     <section id="projects" className="py-24 md:py-32 bg-card/20 dark:bg-card/10 relative overflow-hidden">
       {/* Background glow */}

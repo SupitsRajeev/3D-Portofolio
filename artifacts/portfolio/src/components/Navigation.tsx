@@ -1,10 +1,12 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { useTheme } from "./theme-provider";
 import { Moon, Sun, Menu, X, User, FolderOpen, Cpu, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-import { useContent } from "@/context/ContentContext";
+import { defaultContent } from "@/content";
 
 const navLinks = [
   { name: "About",    href: "#about",    Icon: User },
@@ -15,7 +17,7 @@ const navLinks = [
 
 export function Navigation() {
   const { theme, setTheme } = useTheme();
-  const { content } = useContent();
+  const content = defaultContent;
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");

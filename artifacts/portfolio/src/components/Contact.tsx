@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Send, Loader2 } from "lucide-react";
@@ -5,12 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { useContent } from "@/context/ContentContext";
+import { defaultContent } from "@/content";
 
 export function Contact() {
   const { toast } = useToast();
-  const { content } = useContent();
-  const { identity } = content;
+  const { identity } = defaultContent;
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

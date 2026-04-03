@@ -1,12 +1,13 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { Github, Linkedin, Twitter, Heart } from "lucide-react";
-import { useContent } from "@/context/ContentContext";
+import { defaultContent } from "@/content";
 
 const SOCIAL_ICONS = { GitHub: Github, LinkedIn: Linkedin, Twitter };
 
 export function Footer() {
-  const { content } = useContent();
-  const { identity, socials } = content;
+  const { identity, socials } = defaultContent;
   return (
     <footer className="py-10 bg-background border-t border-border/50 relative overflow-hidden">
       {/* Subtle top glow in dark mode */}
@@ -19,7 +20,7 @@ export function Footer() {
             <span className="text-foreground font-medium">{identity.name}</span>
           </p>
           <p className="text-xs text-muted-foreground/60 flex items-center gap-1.5">
-            Built with React, Vite & Three.js
+            Built with React, Next.js & Three.js
             <Heart className="w-3 h-3 text-primary/60" />
           </p>
         </div>
@@ -46,14 +47,6 @@ export function Footer() {
               </motion.a>
             );
           })}
-          <a
-            href="/admin"
-            aria-label="Content Manager"
-            className="flex items-center justify-center w-10 h-10 rounded-full border border-border/30 text-muted-foreground/30 hover:text-muted-foreground hover:border-border/60 transition-colors duration-200 text-xs font-mono"
-            title="Edit content"
-          >
-            ✎
-          </a>
         </div>
       </div>
     </footer>

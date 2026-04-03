@@ -1,8 +1,10 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { ArrowRight, Github, Linkedin, MessageCircle, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProfilePhoto } from "./ProfilePhoto";
-import { useContent } from "@/context/ContentContext";
+import { defaultContent } from "@/content";
 
 // Maps every supported social platform to a Lucide icon.
 // Twitter icon was removed from lucide-react v0.460+; we fall back to a text label.
@@ -13,8 +15,7 @@ const SOCIAL_ICONS: Record<string, React.ComponentType<{ className?: string }>> 
 };
 
 export function Hero() {
-  const { content } = useContent();
-  const { identity, socials } = content;
+  const { identity, socials } = defaultContent;
   return (
     <section
       id="home"
