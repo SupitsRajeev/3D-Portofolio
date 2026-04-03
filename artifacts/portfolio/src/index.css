@@ -250,6 +250,79 @@ html {
 .animate-nebula-2 { animation: nebula-2 16s ease-in-out infinite; }
 .animate-nebula-3 { animation: nebula-3 14s ease-in-out infinite; }
 
+/* ── Glow button ── */
+.glow-btn {
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 16px;
+  border: none;
+  padding: 2px;
+  background: radial-gradient(circle 80px at 80% -10%, #ffffff, #181b1b);
+  position: relative;
+  display: inline-flex;
+  text-decoration: none;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+.glow-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+.glow-btn:active {
+  transform: translateY(0);
+  filter: brightness(0.95);
+}
+.glow-btn::after {
+  content: "";
+  position: absolute;
+  width: 65%;
+  height: 60%;
+  border-radius: 120px;
+  top: 0;
+  right: 0;
+  box-shadow: 0 0 20px #ffffff38;
+  z-index: -1;
+}
+.glow-btn-blob {
+  position: absolute;
+  width: 70px;
+  height: 100%;
+  border-radius: 16px;
+  bottom: 0;
+  left: 0;
+  background: radial-gradient(circle 60px at 0% 100%, #3fe9ff, #0000ff80, transparent);
+  box-shadow: -10px 10px 30px #0051ff2d;
+  pointer-events: none;
+}
+.glow-btn-inner {
+  padding: 12px 24px;
+  border-radius: 14px;
+  color: #fff;
+  z-index: 3;
+  position: relative;
+  background: radial-gradient(circle 80px at 80% -50%, #777777, #0f1111);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  font-weight: 500;
+  font-size: inherit;
+}
+.glow-btn-inner::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  border-radius: 14px;
+  background: radial-gradient(circle 60px at 0% 100%, #00e1ff1a, #0000ff11, transparent);
+  position: absolute;
+  pointer-events: none;
+}
+.glow-btn:focus-visible {
+  outline: 2px solid #3fe9ff;
+  outline-offset: 3px;
+}
+
 @layer utilities {
   .glass-panel {
     @apply bg-card/70 backdrop-blur-xl border border-border shadow-lg;

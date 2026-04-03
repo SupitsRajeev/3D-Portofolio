@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Send, Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { GlowButton } from "@/components/GlowButton";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
@@ -157,24 +157,19 @@ export function Contact() {
                 />
               </div>
 
-              <Button
-                type="submit"
-                size="lg"
-                className="w-full sm:w-auto px-8 h-12 shadow-lg shadow-primary/20 dark:shadow-primary/30 hover:shadow-primary/40 dark:hover:shadow-[0_0_30px_hsl(var(--primary)/0.45)] hover:-translate-y-0.5 transition-all duration-300"
-                disabled={isSubmitting}
-              >
+              <GlowButton type="submit" disabled={isSubmitting}>
                 {isSubmitting ? (
-                  <span className="flex items-center gap-2">
+                  <>
                     <Loader2 className="w-4 h-4 animate-spin" />
                     Sending...
-                  </span>
+                  </>
                 ) : (
-                  <span className="flex items-center gap-2">
+                  <>
                     Send Message
                     <Send className="w-4 h-4" />
-                  </span>
+                  </>
                 )}
-              </Button>
+              </GlowButton>
             </form>
           </motion.div>
         </div>

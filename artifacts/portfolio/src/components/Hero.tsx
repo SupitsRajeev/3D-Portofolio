@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Github, Linkedin, Twitter, MessageCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { GlowButton } from "./GlowButton";
 import { Hero3D } from "./Hero3D";
 import { useContent } from "@/context/ContentContext";
 
@@ -72,28 +72,15 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <Button
-                size="lg"
-                className="h-12 px-8 text-base shadow-lg shadow-primary/20 dark:shadow-primary/35 hover:shadow-primary/40 dark:hover:shadow-[0_0_28px_hsl(var(--primary)/0.5)] hover:-translate-y-0.5 transition-all duration-300"
-                asChild
-              >
-                <a href="#projects">
-                  View My Work
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
+              <GlowButton href="#projects" className="text-base">
+                View My Work
+                <ArrowRight className="h-4 w-4" />
+              </GlowButton>
 
-              <Button
-                size="lg"
-                variant="outline"
-                className="h-12 px-8 text-base border-border/60 bg-background/40 backdrop-blur-sm hover:border-primary/50 dark:hover:border-primary/50 hover:-translate-y-0.5 transition-all duration-300"
-                asChild
-              >
-                <a href="#contact">
-                  <MessageCircle className="mr-2 h-4 w-4" />
-                  Contact Me
-                </a>
-              </Button>
+              <GlowButton href="#contact" className="text-base">
+                <MessageCircle className="h-4 w-4" />
+                Contact Me
+              </GlowButton>
             </motion.div>
 
             {/* Social links */}
