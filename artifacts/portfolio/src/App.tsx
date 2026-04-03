@@ -14,6 +14,7 @@ import { Skills } from "@/components/Skills";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import AdminPage from "@/pages/admin";
+import { ThreeDShowcase } from "@/components/ThreeDShowcase";
 
 // Initialize react-query client
 const queryClient = new QueryClient();
