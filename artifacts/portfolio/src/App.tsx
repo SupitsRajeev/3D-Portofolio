@@ -11,6 +11,7 @@ import { Projects } from "@/components/Projects";
 import { Skills } from "@/components/Skills";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
+import { ThreeDShowcase } from "@/components/ThreeDShowcase";
 
 // Initialize react-query client
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ function App() {
               <About />
               <Projects />
               <Skills />
+              <ThreeDShowcase />
               <Contact />
             </main>
             <Footer />
