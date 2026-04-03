@@ -41,7 +41,8 @@ export function GlowButton({
     <button
       type={type}
       disabled={disabled}
-      className={cn("glow-btn", disabled && "opacity-60 pointer-events-none", className)}
+      aria-disabled={disabled}
+      className={cn("glow-btn", disabled && "opacity-60 cursor-not-allowed", className)}
       {...rest}
     >
       {inner}
