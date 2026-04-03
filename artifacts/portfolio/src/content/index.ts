@@ -168,9 +168,10 @@ export const defaultContent: PortfolioContent = {
     },
   ],
   skills: [
-    { category: "Languages",      icon: "Code",     items: ["JavaScript", "TypeScript", "Python", "HTML/CSS", "SQL", "GraphQL"], colorScheme: "violet"  },
-    { category: "Frontend",       icon: "Monitor",  items: ["React", "Next.js", "Tailwind CSS", "Framer Motion", "Three.js", "Redux"],  colorScheme: "cyan"    },
-    { category: "Backend",        icon: "Server",   items: ["Node.js", "Express", "PostgreSQL", "MongoDB", "Redis", "REST APIs"],   colorScheme: "emerald" },
-    { category: "DevOps & Tools", icon: "Settings", items: ["AWS", "Docker", "Git", "CI/CD", "Vercel", "Figma"],              colorScheme: "orange"  },
+    { category: "Languages",      icon: "Code",     items: ["JavaScript", "TypeScript", "Python", "HTML/CSS", "SQL", "GraphQL", "Go", "Rust", "Bash", "C++"], colorScheme: "violet"  },
+    { category: "Frontend",       icon: "Monitor",  items: ["React", "Next.js", "Tailwind CSS", "Framer Motion", "Three.js", "Redux", "Vue.js", "SASS/SCSS", "Vite", "Storybook"], colorScheme: "cyan"    },
+    { category: "Backend",        icon: "Server",   items: ["Node.js", "Express", "PostgreSQL", "MongoDB", "Redis", "REST APIs", "GraphQL", "MySQL", "Prisma", "WebSockets"],   colorScheme: "emerald" },
+    { category: "DevOps & Tools", icon: "Settings", items: ["AWS", "Docker", "Git", "CI/CD", "Vercel", "Figma", "Kubernetes", "GitHub Actions", "Linux", "Nginx"],              colorScheme: "orange"  },
+    { category: "Testing & QA",   icon: "TestTube", items: ["Jest", "Vitest", "Cypress", "React Testing Library", "ESLint", "Prettier", "Storybook"], colorScheme: "rose"    },
   ],
 };

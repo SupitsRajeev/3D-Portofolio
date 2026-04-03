@@ -4,6 +4,57 @@ import { motion } from "framer-motion";
 import { FloatingShapes3D } from "./FloatingShapes3D";
 import { defaultContent, COLOR_SCHEMES, SKILL_ICONS } from "@/content";
 import { FancyIconBox } from "./FancyIconBox";
+import {
+  SiJavascript, SiTypescript, SiPython, SiHtml5, SiGraphql,
+  SiReact, SiNextdotjs, SiTailwindcss, SiRedux, SiVuedotjs, SiSass, SiVite, SiStorybook,
+  SiNodedotjs, SiPostgresql, SiMongodb, SiRedis, SiPrisma, SiMysql,
+  SiDocker, SiGit, SiVercel, SiFigma,
+  SiKubernetes, SiGithubactions, SiLinux, SiJest, SiNginx,
+  SiCypress, SiEslint, SiPrettier,
+  SiGo, SiRust, SiGnubash, SiThreedotjs, SiFramer, SiWebpack, SiVitest,
+} from "react-icons/si";
+import type { IconType } from "react-icons";
+
+const TECH_ICONS_SI: Record<string, IconType> = {
+  "JavaScript":             SiJavascript,
+  "TypeScript":             SiTypescript,
+  "Python":                 SiPython,
+  "HTML/CSS":               SiHtml5,
+  "GraphQL":                SiGraphql,
+  "Go":                     SiGo,
+  "Rust":                   SiRust,
+  "Bash":                   SiGnubash,
+  "React":                  SiReact,
+  "Next.js":                SiNextdotjs,
+  "Tailwind CSS":           SiTailwindcss,
+  "Redux":                  SiRedux,
+  "Vue.js":                 SiVuedotjs,
+  "SASS/SCSS":              SiSass,
+  "Vite":                   SiVite,
+  "Storybook":              SiStorybook,
+  "Three.js":               SiThreedotjs,
+  "Framer Motion":          SiFramer,
+  "Webpack":                SiWebpack,
+  "Node.js":                SiNodedotjs,
+  "PostgreSQL":             SiPostgresql,
+  "MongoDB":                SiMongodb,
+  "Redis":                  SiRedis,
+  "Prisma":                 SiPrisma,
+  "MySQL":                  SiMysql,
+  "Docker":                 SiDocker,
+  "Git":                    SiGit,
+  "Vercel":                 SiVercel,
+  "Figma":                  SiFigma,
+  "Kubernetes":             SiKubernetes,
+  "GitHub Actions":         SiGithubactions,
+  "Linux":                  SiLinux,
+  "Nginx":                  SiNginx,
+  "Jest":                   SiJest,
+  "Vitest":                 SiVitest,
+  "Cypress":                SiCypress,
+  "ESLint":                 SiEslint,
+  "Prettier":               SiPrettier,
+};
 
 export function Skills() {
   const { skills } = defaultContent;
@@ -58,7 +109,9 @@ export function Skills() {
               </div>
 
               <div className="flex flex-wrap gap-2.5">
-                {skillGroup.items.map((item, i) => (
+                {skillGroup.items.map((item, i) => {
+                  const SiIcon = TECH_ICONS_SI[item];
+                  return (
                   <motion.div
                     key={item}
                     initial={{ opacity: 0, scale: 0.85 }}
@@ -66,7 +119,7 @@ export function Skills() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.3, delay: index * 0.08 + i * 0.04 }}
                     whileHover={{ scale: 1.08, y: -2 }}
-                    className="relative px-4 py-2 bg-card/80 dark:bg-card/60 backdrop-blur-sm border border-border/60 rounded-lg text-sm text-muted-foreground hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all duration-200 shadow-sm cursor-default font-medium overflow-hidden group/tag"
+                    className="relative flex items-center gap-1.5 px-4 py-2 bg-card/80 dark:bg-card/60 backdrop-blur-sm border border-border/60 rounded-lg text-sm text-muted-foreground hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all duration-200 shadow-sm cursor-default font-medium overflow-hidden group/tag"
                   >
                     {/* Hover shine */}
                     <motion.span
@@ -77,9 +130,11 @@ export function Skills() {
                     >
                       <span className="block w-1/2 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12" />
                     </motion.span>
+                    {SiIcon && <SiIcon className="relative shrink-0 w-3.5 h-3.5 opacity-70" />}
                     <span className="relative">{item}</span>
                   </motion.div>
-                ))}
+                  );
+                })}
               </div>
             </motion.div>
             );
