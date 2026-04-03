@@ -3,6 +3,7 @@ import { ArrowUpRight, Github, Link2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useContent } from "@/context/ContentContext";
 import { COLOR_SCHEMES, PROJECT_ICONS } from "@/content";
+import { FancyIconBox } from "./FancyIconBox";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -58,8 +59,14 @@ export function Projects() {
 
               <div>
                 {/* Project icon */}
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 bg-gradient-to-br ${scheme.accentFrom} ${scheme.accentTo} shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300`}>
-                  <Icon className="w-5 h-5 text-white" />
+                <div className="mb-6">
+                  <FancyIconBox
+                    icon={Icon}
+                    color="text-white"
+                    bg={`bg-gradient-to-br ${scheme.accentFrom} ${scheme.accentTo}`}
+                    variant="project"
+                    size="lg"
+                  />
                 </div>
 
                 <h3 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2 group-hover:text-primary transition-colors duration-200">

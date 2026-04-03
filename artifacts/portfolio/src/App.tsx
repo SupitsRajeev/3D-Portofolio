@@ -4,6 +4,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ContentProvider } from "@/context/ContentContext";
+import { AuthProvider } from "@/context/AuthContext";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 
 import { Navigation } from "@/components/Navigation";
 import { StarField } from "@/components/StarField";
@@ -14,7 +16,6 @@ import { Skills } from "@/components/Skills";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import AdminPage from "@/pages/admin";
-import { ThreeDShowcase } from "@/components/ThreeDShowcase";
 
 // Initialize react-query client
 const queryClient = new QueryClient();
@@ -41,15 +42,19 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
         <ContentProvider>
-          <TooltipProvider>
-            <Router>
-              <Switch>
-                <Route path="/admin" component={AdminPage} />
-                <Route component={PortfolioPage} />
-              </Switch>
-            </Router>
-            <Toaster />
-          </TooltipProvider>
+          <AuthProvider>
+            <TooltipProvider>
+              <Router>
+                <Switch>
+                  <Route path="/admin">
+                    <ProtectedRoute component={AdminPage} />
+                  </Route>
+                  <Route component={PortfolioPage} />
+                </Switch>
+              </Router>
+              <Toaster />
+            </TooltipProvider>
+          </AuthProvider>
         </ContentProvider>
       </ThemeProvider>
     </QueryClientProvider>

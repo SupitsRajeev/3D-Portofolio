@@ -32,6 +32,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     async (username: string, password: string): Promise<boolean> => {
       const expectedUser = import.meta.env.VITE_ADMIN_USER ?? "admin";
       const expectedHash = import.meta.env.VITE_ADMIN_PASS_HASH ?? "";
+      // Reject if the hash env var is not configured
+      if (!expectedHash) return false;
       const inputHash = await sha256(password);
       if (username === expectedUser && inputHash === expectedHash) {
         sessionStorage.setItem(SESSION_KEY, "1");

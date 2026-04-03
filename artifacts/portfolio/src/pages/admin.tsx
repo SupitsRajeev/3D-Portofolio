@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useContent } from "@/context/ContentContext";
+import { useAuth } from "@/context/AuthContext";
 import {
   defaultContent,
   COLOR_SCHEMES,
@@ -28,7 +29,7 @@ import {
   type SkillGroup,
   type AboutHighlight,
 } from "@/content";
-import { ArrowLeft, Plus, Trash2, RotateCcw, Save, GripVertical } from "lucide-react";
+import { ArrowLeft, Plus, Trash2, RotateCcw, Save, GripVertical, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -589,6 +590,7 @@ function SkillsSection({
 // ─── Admin page ───────────────────────────────────────────────────────────────
 export default function AdminPage() {
   const { content, updateContent, resetContent } = useContent();
+  const { logout } = useAuth();
   const [, navigate] = useLocation();
   const { toast } = useToast();
 
@@ -605,6 +607,11 @@ export default function AdminPage() {
     resetContent();
     setDraft(structuredClone(defaultContent));
     toast({ title: "Reset complete", description: "All content restored to defaults." });
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
   };
 
   return (
@@ -628,6 +635,10 @@ export default function AdminPage() {
             <Button size="sm" onClick={handleSave} className="gap-2">
               <Save className="w-3.5 h-3.5" />
               Save Changes
+            </Button>
+            <Button variant="ghost" size="sm" onClick={handleLogout} className="gap-2 text-muted-foreground hover:text-destructive" title="Sign out">
+              <LogOut className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Sign Out</span>
             </Button>
           </div>
         </div>
