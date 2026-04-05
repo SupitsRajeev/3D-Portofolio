@@ -5,6 +5,7 @@ import { ArrowUpRight, Github, Link2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { defaultContent, COLOR_SCHEMES, PROJECT_ICONS } from "@/content";
 import { FancyIconBox } from "./FancyIconBox";
+import { GsapReveal } from "@/components/GsapReveal";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -12,7 +13,7 @@ const containerVariants = {
 };
 const itemVariants = {
   hidden: { opacity: 0, y: 32 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } },
 };
 
 export function Projects() {
@@ -25,16 +26,10 @@ export function Projects() {
       </div>
 
       <div className="container px-6 md:px-12 mx-auto max-w-6xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
-          className="mb-16 flex items-center gap-4"
-        >
+        <GsapReveal className="mb-16 flex items-center gap-4">
           <h2 className="text-sm font-mono text-primary uppercase tracking-widest">02. Selected Work</h2>
           <div className="h-[1px] flex-grow max-w-[200px] bg-border" />
-        </motion.div>
+        </GsapReveal>
 
         <motion.div
           variants={containerVariants}
@@ -56,6 +51,12 @@ export function Projects() {
             >
               {/* Gradient card sheen on hover */}
               <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${scheme.accentFrom}/5 ${scheme.accentTo}/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
+
+              {/* SVG turbulence distortion overlay on hover (Active Theory card effect) */}
+              <div
+                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none overflow-hidden"
+                style={{ filter: "url(#card-turbulence)", mixBlendMode: "overlay" }}
+              />
 
               <div>
                 {/* Project icon */}

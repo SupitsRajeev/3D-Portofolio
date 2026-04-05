@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { defaultContent } from "@/content";
 import { LottieAnimation } from "@/components/LottieAnimation";
+import { GsapReveal } from "@/components/GsapReveal";
 
 // Free "success checkmark" animation from LottieFiles.
 // Swap this URL for any animation you prefer from https://lottiefiles.com
@@ -46,13 +47,7 @@ export function Contact() {
 
       <div className="container px-6 md:px-12 mx-auto max-w-5xl relative z-10">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
-          className="mb-16 flex flex-col items-center text-center"
-        >
+        <GsapReveal className="mb-16 flex flex-col items-center text-center">
           <div className="mb-4 flex items-center gap-4">
             <div className="h-[1px] w-12 bg-border" />
             <h2 className="text-sm font-mono text-primary uppercase tracking-widest">04. What's Next?</h2>
@@ -65,7 +60,7 @@ export function Contact() {
             Currently open for new opportunities. Whether you have a question, a project idea,
             or just want to say hi, my inbox is always open.
           </p>
-        </motion.div>
+        </GsapReveal>
 
         <div className="grid md:grid-cols-[1fr_2fr] gap-12 items-start">
           {/* Info cards */}
