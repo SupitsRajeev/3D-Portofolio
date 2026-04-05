@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, type ReactNode } from "react";
+import React, { useRef, useEffect, type ReactNode } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -129,21 +129,21 @@ export function GsapWordReveal({
     return () => ctx.revert();
   }, [text, stagger, delay, immediate]);
 
-  return (
-    /* @ts-expect-error — dynamic Tag is valid */
-    <Tag ref={containerRef} className={className}>
-      {words.map((word, i) => (
-        <span
-          key={i}
-          className={`inline-block overflow-hidden leading-none ${wordClassName}`}
-          aria-hidden={i > 0 ? true : undefined}
-        >
-          <span className="gsap-word-inner inline-block">
-            {word}
-          </span>
-          {i < words.length - 1 ? "\u00a0" : ""}
+  // Use React.createElement to avoid JSX-ref typing issues with dynamic tags
+  return React.createElement(
+    Tag,
+    { ref: containerRef as React.Ref<HTMLElement>, className },
+    words.map((word, i) => (
+      <span
+        key={i}
+        className={`inline-block overflow-hidden leading-none ${wordClassName}`}
+        aria-hidden={i > 0 ? true : undefined}
+      >
+        <span className="gsap-word-inner inline-block">
+          {word}
         </span>
-      ))}
-    </Tag>
+        {i < words.length - 1 ? "\u00a0" : ""}
+      </span>
+    ))
   );
 }

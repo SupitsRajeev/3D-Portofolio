@@ -288,15 +288,17 @@ function Satellite({
 
 /* ─── Trailing orb ─── */
 function TrailingOrb() {
-  const ref = useRef<THREE.Mesh>(null!);
+  const ref = useRef<THREE.Mesh>(null);
   useFrame((state) => {
     if (!ref.current) return;
     ref.current.position.x = Math.sin(state.clock.elapsedTime * 0.5) * 2.2;
     ref.current.position.y = Math.cos(state.clock.elapsedTime * 0.7) * 1.4;
     ref.current.position.z = Math.sin(state.clock.elapsedTime * 0.3) * 0.8;
   });
+  // Mesh extends Object3D; cast is safe — Trail only reads position from the ref
+  const trailTarget = ref as React.RefObject<THREE.Object3D>;
   return (
-    <Trail width={0.7} length={8} color="#7c3aed" attenuation={(t) => t * t} target={ref as React.RefObject<THREE.Object3D>}>
+    <Trail width={0.7} length={8} color="#7c3aed" attenuation={(t) => t * t} target={trailTarget}>
       <Sphere ref={ref} args={[0.1, 16, 16]}>
         <meshBasicMaterial color="#c4b5fd" />
       </Sphere>
