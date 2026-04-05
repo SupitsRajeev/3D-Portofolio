@@ -5,6 +5,7 @@ import { ArrowRight, Github, Linkedin, MessageCircle, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button";
 import { ProfilePhoto } from "./ProfilePhoto";
 import { LottieAnimation } from "@/components/LottieAnimation";
+import { GsapWordReveal } from "@/components/GsapReveal";
 import { defaultContent } from "@/content";
 
 // Maps every supported social platform to a Lucide icon.
@@ -55,17 +56,18 @@ export function Hero() {
               </span>
             </motion.div>
 
-            {/* Headline */}
-            <motion.h1
-              className="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight text-foreground mb-6 leading-[1.05]"
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.1 }}
-            >
-              I'm{" "}
-              <span className="text-foreground">{identity.name}</span>
+            {/* Headline — GSAP word-by-word reveal */}
+            <h1 className="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight text-foreground mb-6 leading-[1.05]">
+              <GsapWordReveal
+                text={`I'm ${identity.name}`}
+                as="span"
+                delay={0.15}
+                stagger={0.07}
+                immediate
+                className="inline"
+              />
               <span className="text-primary dark:drop-shadow-[0_0_18px_hsl(var(--primary)/0.55)]">.</span>
-            </motion.h1>
+            </h1>
 
             {/* Subtitle */}
             <motion.p

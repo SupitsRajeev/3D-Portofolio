@@ -7,6 +7,7 @@ import { defaultContent } from "@/content";
 import { HIGHLIGHT_ICONS } from "@/content";
 import { FancyIconBox } from "./FancyIconBox";
 import { useOrb } from "@/context/OrbContext";
+import { GsapReveal } from "@/components/GsapReveal";
 
 const SECTION_VISIBILITY_THRESHOLD = 0.25;
 
@@ -16,7 +17,7 @@ const containerVariants = {
 };
 const itemVariants = {
   hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" as const } },
 };
 
 export function About() {
@@ -51,11 +52,11 @@ export function About() {
           viewport={{ once: true, margin: "-100px" }}
           className="max-w-5xl mx-auto"
         >
-          {/* Section label */}
-          <motion.div variants={itemVariants} className="mb-4 flex items-center gap-4">
+          {/* Section label — GSAP clip-path reveal */}
+          <GsapReveal className="mb-4 flex items-center gap-4">
             <h2 className="text-sm font-mono text-primary uppercase tracking-widest">01. About Me</h2>
             <div className="h-[1px] w-24 bg-border" />
-          </motion.div>
+          </GsapReveal>
 
           <div className="grid md:grid-cols-[2fr_1fr] gap-14 items-start">
             {/* Text */}

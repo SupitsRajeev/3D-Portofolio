@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { FloatingShapes3D } from "./FloatingShapes3D";
 import { defaultContent, COLOR_SCHEMES, SKILL_ICONS } from "@/content";
 import { FancyIconBox } from "./FancyIconBox";
+import { GsapReveal } from "@/components/GsapReveal";
 import {
   SiJavascript, SiTypescript, SiPython, SiHtml5, SiGraphql,
   SiReact, SiNextdotjs, SiTailwindcss, SiRedux, SiVuedotjs, SiSass, SiVite, SiStorybook,
@@ -72,16 +73,10 @@ export function Skills() {
       <div className="absolute bottom-1/4 right-0 w-72 h-72 bg-cyan-500/6 dark:bg-cyan-500/10 blur-[110px] rounded-full pointer-events-none" />
 
       <div className="container px-6 md:px-12 mx-auto max-w-5xl relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
-          className="mb-16 flex items-center gap-4"
-        >
+        <GsapReveal className="mb-16 flex items-center gap-4">
           <h2 className="text-sm font-mono text-primary uppercase tracking-widest">03. Technical Arsenal</h2>
           <div className="h-[1px] flex-grow max-w-[200px] bg-border" />
-        </motion.div>
+        </GsapReveal>
 
         <div className="grid md:grid-cols-2 gap-10 md:gap-14">
           {skills.map((skillGroup, index) => {
